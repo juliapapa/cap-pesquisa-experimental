@@ -1,4 +1,4 @@
-# Curso de Capacitação em Pesquisa Experimental -- FGVRI
+# Curso de Capacitação em Pesquisa Experimental - FGVRI
 
 O objetivo desse curso é capacitar as equipes dos professores da FGVRI para trabalho com experimentos e experimentos de survey.
 
