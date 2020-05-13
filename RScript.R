@@ -247,4 +247,50 @@ barplot(table(reg), col = rainbow(3))
 ## pie chart:
 pie(table(reg), col = rainbow(3))
 
+####
+## Aula 5
+####
+
+## Carregando banco de dados
+dat <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/bcoAula.csv')
+
+## barplot
+
+# 1. Criar uma tabela com a variável
+tab <- table(dat$educ)
+
+# 2. Colocar a tabela no comando para fazer o barplot
+barplot(tab, main = 'Minha Tabela para Educacao', ylim = c(0,10))
+
+## histograma
+hist(dat$sal, main = 'Meu histograma', col='red',
+     xlab = 'Salário', ylab = 'Frequencia', breaks = 3)
+
+
+## box-plot
+boxplot(dat$sal)
+
+### duas dimensões
+
+## duas variáveis quanti
+
+# scatter-plot
+
+# x e depois y
+plot(dat$idade, dat$sal, pch=18, col = '#990000')
+
+# usando 'formula'
+plot(sal~idade, pch=18, col = 'blue', data = dat)
+
+## uma quali e uma quanti
+boxplot(sal~educ, data=dat)
+
+## duas quali
+tab <- table(dat$reg, dat$est_civ2)
+tab
+
+mosaicplot(tab, col=c('blue', 'green'))
+
+## R-base over
+
 
