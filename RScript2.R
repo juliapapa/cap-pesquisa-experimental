@@ -54,12 +54,13 @@
 # Para fazer um histograma em R basta usarmos o 
 
 # EXERCÍCIO: carregue e analise o banco `USArrests`
+data(USArrests)
+help(USArrests)
 
 # ANALISE:
 library(tidyverse)
 ggplot(data = USArrests) +
-  geom_histogram(mapping = aes(x = Murder))
-
+  geom_histogram(mapping = aes(x = Murder), bins=15)
 
 # E temos um gráfico onde o número de assaltos para 
 # cada 100 mil habitantes é contra sua frequência. 
@@ -112,6 +113,9 @@ sort(USArrests$Murder)
 # adicionamos para facilitar o entendimento.
 
 # EXERCÍCIO: faça um histograma de Assault
+ggplot(data = USArrests) +
+  geom_histogram(mapping = aes(x = Assault), binwidth = 50,
+                 fill = 'red', col = 'black', alpha = 0.1)
 
 # Similar ao histograma, temos dois gráficos 
 # interessantes, e que seguem a mesma lógica: 
@@ -119,11 +123,14 @@ sort(USArrests$Murder)
 
 # Gráfico de pontos:
 ggplot(data = USArrests) +
-  geom_dotplot(mapping = aes(x = Murder), binwidth = 1)
+  geom_dotplot(mapping = aes(x = Murder), 
+               binwidth = 1, alpha = 0.3) +
+  scale_x_continuous(limits = c(0, 20))
 
 # Gráfico da densidade usando kernel Gaussiano
 ggplot(data = USArrests) +
-  geom_density(mapping = aes(x = Murder), kernel = 'gaussian')
+  geom_density(mapping = aes(x = Murder), 
+               kernel = 'gaussian')
 
 # Outro gráfico importante para variáveis quantitativas é 
 # o [diagrama de caixa](https://pt.wikipedia.org/wiki/Diagrama_de_caixa), 
@@ -133,7 +140,7 @@ ggplot(data = USArrests) +
 
 # Box-plot
 ggplot(data = USArrests) +
-  geom_boxplot(mapping = aes(x = 1, y = Murder))
+  geom_boxplot(mapping = aes(x = 1, y = Murder), alpha=0.3)
 
 # Similar a este, mas mais bonito é o violin-plot. 
 # Ele faz exatamente como o diagrama de caixa, mas converge 
@@ -142,7 +149,8 @@ ggplot(data = USArrests) +
   
 # violin plot:
 ggplot(data = USArrests) +
-  geom_violin(mapping = aes(x = 1, y = Murder))
+  geom_violin(mapping = aes(x = 'Violin', y = Murder), 
+              lwd = 2)
 
 # EXERCÍCIO: Faça um dotplot, density plot e um violin plot da
 # variável Assault
@@ -180,6 +188,16 @@ ggplot(data = USArrests) +
 #           |  do gráfico
 
 ## EXERCÍCIO: Faça um gráfico de Assault, publication level.
+data(USArrests)
+library(tidyverse)
+ggplot(data = USArrests) +
+  geom_histogram(mapping = aes(x = Assault), 
+                 bins = 8, color = 'gray20', 
+                 fill = 'gray80', alpha = 0.5) +
+  labs(x = 'Assaltos para cada 100 mil habitantes',
+       y = 'Frequencia',
+       title = 'Assaltos em Estados Americanos')
+  
 
 # Ainda, se você quiser alterar outros componentes, 
 # basta consultar a [cheat sheet do ggplot2]
@@ -197,11 +215,19 @@ ggplot(data = USArrests) +
 # país tem ou não judiciário, e que se tem, não é independente). 
 # Para começar a análise:
 
-## Exercícios: 1. Carregue o pacote Zelig e depois carregue o banco PErisk
+## Exercícios: 1. Carregue o banco PE risk
 ##             2. Analise o banco
 ##             3. Faça um histograma do pib per capita
 
+PErisk <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/PErisk.csv')
+
 # Gráfico de barras:
+ggplot(data = PErisk) +
+  geom_bar(mapping = aes(x = courts))
+
+PErisk$courts = as.factor(PErisk$courts)
+levels(PErisk$courts) <- c('Judiciário comprometido', 'Judiciário independente')
+
 ggplot(data = PErisk) +
   geom_bar(mapping = aes(x = courts))
 
@@ -219,11 +245,15 @@ ggplot(data = PErisk) +
 # fatores com os valores. Podemos ainda alterar 
 # o esquema de cores e os fundos das variáveis, 
 # bem como a intensidade da cor da barra. Por exemplo:
-  
+
+# Exercício: faça um barplot para corrupção.
+ggplot(data = PErisk) +
+  geom_bar(mapping = aes(x = factor(prscorr2)))
+
 # Barras coloridas
 ggplot(data = PErisk) +
-  geom_bar(mapping = aes(x = factor(prsexp2)), fill = rainbow(6))
-
+  geom_bar(mapping = aes(x = factor(prsexp2)), 
+           fill = gray(1:6/7), color = 'red')
 
 # O comando `rainbow` gera cores do arco-íris. 
 # Se usarmos `rainbow(6)` o sistema calcula seis 
@@ -257,7 +287,7 @@ ggplot(data = PErisk) +
 # Mosaic-plot
 ggplot(data = PErisk) +
   geom_bar(mapping = aes(x = factor(prscorr2), 
-                         fill = factor(courts)),
+                         fill = courts),
            position = 'fill')
 
 # E para melhorar a hipótese, podemos transformar a 
@@ -265,9 +295,11 @@ ggplot(data = PErisk) +
 
 # Mosaic-plot: 2.0
 PErisk$lowcorrup = as.numeric(PErisk$prscorr2>2)
+PErisk$lowcorrup = as.factor(PErisk$lowcorrup)
+levels(PErisk$lowcorrup) <- c('Alta corrupção', 'Baixa corrupção')
 ggplot(data = PErisk) +
-  geom_bar(mapping = aes(x = factor(lowcorrup), 
-                         fill = factor(courts)),
+  geom_bar(mapping = aes(x = lowcorrup, 
+                         fill = courts),
            position = 'fill')
 
 # Portanto, parece que temos uma associação entre 
@@ -284,8 +316,8 @@ PErisk$courts_fator = factor(PErisk$courts)
 levels(PErisk$courts_fator) <- c('Não Independente', 'Independente')
 
 ggplot(data = PErisk) +
-  geom_bar(mapping = aes(x = lowcorrup_fator, 
-                         fill = courts_fator),
+  geom_bar(mapping = aes(x = lowcorrup, 
+                         fill = courts),
            position = 'fill') +
   labs(x = 'Corrupção', 
        y = 'Proporção', 
@@ -321,11 +353,11 @@ ggplot(data = PErisk) +
 
 # Usando box-plot
 ggplot(data = PErisk) +
-  geom_boxplot(mapping = aes(x = lowcorrup_fator, y = barb2))
+  geom_boxplot(mapping = aes(x = lowcorrup, y = barb2))
 
 # Usando violin-plot
 ggplot(data = PErisk) +
-  geom_violin(mapping = aes(x = lowcorrup_fator, y = barb2))
+  geom_violin(mapping = aes(x = lowcorrup, y = barb2))
 
 # Portanto, há diferenças importantes nas distribuições 
 # nos dois casos. Nesse sentido, temos algum fundamento 
@@ -380,7 +412,7 @@ ggplot(data = PErisk) +
   
 # Diagrama de dispersão + variável binária
 ggplot(data = PErisk) +
-  geom_point(mapping = aes(x = barb2, y = gdpw2, color = courts_fator)) +
+  geom_point(mapping = aes(x = barb2, y = gdpw2, color = courts)) +
   geom_smooth(mapping = aes(x = barb2, y = gdpw2), 
               method = 'lm')
 
@@ -392,14 +424,14 @@ ggplot(data = PErisk) +
 
 # Gráfico com uma só reta ajustada, mas diferenciando pontos
 ggplot(data = PErisk) +
-  geom_point(mapping = aes(x = barb2, y = gdpw2, color = courts_fator)) +
+  geom_point(mapping = aes(x = barb2, y = gdpw2, color = courts)) +
   geom_smooth(mapping = aes(x = barb2, y = gdpw2), 
               method = 'lm')
 
 # Gráfico com duas retas ajustadas, para cada um dos tipos de pontos
 ggplot(data = PErisk) +
-  geom_point(mapping = aes(x = barb2, y = gdpw2, color = courts_fator)) +
-  geom_smooth(mapping = aes(x = barb2, y = gdpw2, color = courts_fator), 
+  geom_point(mapping = aes(x = barb2, y = gdpw2, color = courts)) +
+  geom_smooth(mapping = aes(x = barb2, y = gdpw2, color = courts), 
               method = 'lm')
 
 # E aí está a confirmação (ao menos visual) de que judiciário 
