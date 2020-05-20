@@ -12,6 +12,9 @@ Esse Github tem cinco pastas:
 
 Vocês devem baixar o conteúdo desse GitHub automaticamente via R Studio. Ao início de cada aula, vocês devem dar um push para atualizar o conteúdo.
 
+As gravações das aulas estão disponíveis no link: 
+https://www.dropbox.com/sh/nvax4oazniokb2q/AADjOl5bwD350y17zJxHg2e5a
+
 Qualquer coisa me avisem!
 Umberto
 
