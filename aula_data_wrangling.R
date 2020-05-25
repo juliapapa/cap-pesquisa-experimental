@@ -1,6 +1,11 @@
 ## Manipulando dados R
 ## Umberto Mignozzetti e Lucas Mingardi
 
+## Carregando bancos de dados
+PErisk <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/PErisk.csv')
+sanctions <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/sanction.csv')
+voteincome <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/voteincome.csv')
+
 ####
 ## MANIPULANDO DADOS EM R
 ####
@@ -85,6 +90,8 @@
 ## O **tidyverse**
 ####
 
+library(tidyverse)
+
 # *tidyverse* é o nome de uma série de pacotes 
 # criados por Hadley Wickham para operar com 
 # dados. Os pacotes visam facilitar o trabalho 
@@ -160,9 +167,15 @@ head(PErisk_so_quanti)
 # Ou seja, a sintaxe foi a seguinte:
 ### banco_pos_selecao <- select(banco_inicial, var1, var2, var3, ...)
 
+meu_select <- select(voteincome, state, vote, education)
+head(meu_select)
+
 # SELECT POR CARACTERISTICAS
 PErisk_so_com_co <- select(PErisk, starts_with('co'))
 head(PErisk_so_com_co)
+
+meu_select <- select(sanctions, starts_with('co'))
+head(meu_select)
 
 # E a função `starts_with` seleciona somente as 
 # variáveis cujo nome começa com `co`, no caso 
@@ -171,13 +184,16 @@ head(PErisk_so_com_co)
 PErisk_termina_com_2 <- select(PErisk, ends_with('2'))
 head(PErisk_termina_com_2)
 
+meu_select <- select(voteincome, ends_with('e'))
+head(meu_select)
+
 # E portanto, seleciona todas as variáveis que o nome 
 # termina com o número 2. Podemos também selecionar as 
 # variáveis que contém, em seus nomes, um conjunto de 
 # caracteres que determinarmos. Por exemplo, suponha 
 # que queremos selecionar as variáveis que contem `exp` 
 # no nome (porque queremos coisas relacionadas à expropriação):
-PErisk_contem_exp <- select(PErisk, contains('exp'))
+PErisk_contem_exp <- select(PErisk, country, contains('exp'))
 head(PErisk_contem_exp)
 
 # NOMES:
@@ -188,11 +204,17 @@ names(PErisk)
 PErisk_entre_vars <- select(PErisk, courts:prscorr2)
 head(PErisk_entre_vars)
 
+meu_select <- select(voteincome, vote:age)
+head(meu_select)
+
 # E se usarmos o sinal de menos (`-`) em frente 
 # à seleção (coloque a seleção entre parênteses), 
 # pegamos todas as variáveis menos as que especificamos:
 PErisk_menos_entre_vars <- select(PErisk, -(courts:prscorr2))
 head(PErisk_menos_entre_vars)
+
+meu_select <- select(sanctions, -(import))
+head(meu_select)
 
 # E portanto, esses são os métodos de seleção:
 
@@ -207,26 +229,55 @@ head(PErisk_menos_entre_vars)
 
 # E você ainda pode usar o `select` para selecionar e 
 # renomear variáveis:
-PErisk_barb_renome <- select(PErisk, premio_mercado_negro = barb2)
+PErisk_barb_renome <- select(PErisk, country, premio_mercado_negro = barb2)
 head(PErisk_barb_renome)
+
+meu_select <- select(voteincome, 
+                     -(education:female), 
+                     educ = education,
+                     idade = age, 
+                     mulher = female)
+head(meu_select)
 
 # E a mesma lógica vale para um grupo de variáveis:
 PErisk_renome <- select(PErisk, vars = courts:prscorr2)
 head(PErisk_renome)
 
+meu_select <- select(sanctions, mil, coop, ncost, v = target:num)
+head(meu_select)
+
 #### `rename`
 
 # É a função que usamos para renomear variáveis no banco.
-PErisk_renomeado <- rename(PErisk, pais = country, 
+PErisk_renomeado <- rename(PErisk, 
+                           pais = country, 
                            indepjud = courts)
 head(PErisk_renomeado)
+
+meu_rename <- rename(voteincome,
+                     estado = state,
+                     ano = year,
+                     votou = income,
+                     renda = income,
+                     educação = education,
+                     idade = age,
+                     mulher = female)
+head(meu_rename)
 
 #### `filter`
 
 # Filtrando dados
-PErisk_filtrado <- filter(PErisk, courts == 1)
+
+PErisk_filtrado <- filter(PErisk, courts != 1)
 head(PErisk_filtrado)
 dim(PErisk_filtrado)
+
+meu_filter <- filter(voteincome, vote==1)
+head(meu_filter)
+dim(meu_filter)
+
+meu_filter <- filter(sanctions, ncost == 'major loss')
+head(meu_filter)
 
 # Caso você precise filtrar de acordo com mais de 
 # uma condição, por exemplo, cortes independentes 
@@ -235,6 +286,13 @@ dim(PErisk_filtrado)
 PErisk_filtrado2 <- filter(PErisk, courts == 1, prscorr2 < 3)
 head(PErisk_filtrado2)
 dim(PErisk_filtrado2)
+
+meu_filter <- filter(voteincome, income > 10, age > 50)
+head(meu_filter)
+
+meu_filter$vote <- factor(meu_filter$vote)
+levels(meu_filter$vote) <- c('Não Votou', 'Votou')
+summary(meu_filter)
 
 #Operador	 | Significado
 #--------------------------------
@@ -264,9 +322,18 @@ dim(PErisk_filtrado2)
 PErisk_ordenadoPIB <- arrange(PErisk, gdpw2)
 head(PErisk_ordenadoPIB)
 
+meu_arrange <- arrange(voteincome, income)
+head(meu_arrange)
+
 # Ou também podemos reverter a ordem:
 PErisk_ordenadoPIB2 <- arrange(PErisk, desc(gdpw2))
 head(PErisk_ordenadoPIB2)
+
+meu_arrange <- arrange(PErisk, prsexp2, desc(gdpw2))
+head(meu_arrange)
+
+meu_arrange <- arrange(voteincome, income, education, desc(age))
+head(meu_arrange, 100)
 
 # A função `desc` entende que queremos ordenar em ordem decrescente.
 
@@ -281,14 +348,23 @@ head(PErisk_ordenadoPIB2)
 # transformar em dolares novamente. 
 # Precisamos usar a função `exp`:
 PErisk_PIBemDolares <- mutate(PErisk, PIBpc = exp(gdpw2))
+PErisk_PIBemDolares <- select(PErisk_PIBemDolares, 
+                              country:courts, 
+                              PIBpc, 
+                              barb2:gdpw2)
 head(PErisk_PIBemDolares)
+
+meu_mutate <- mutate(PErisk, risco = (10-(prsexp2+prscorr2))/10)
+head(meu_mutate)
 
 # Ainda, podemos usar essas funções para criar 
 # variáveis que fazem comparações, e retornam 
 # resultados dessas comparações:
-PErisk_transmuted2 <- mutate(PErisk_transmuted, 
-                             riscoNota = ifelse(risco>5, 'Alto', 'Baixo'))
-head(PErisk_transmuted2)
+PErisk_transmuted <- transmute(PErisk, risco = 10-prsexp2-prscorr2)
+head(PErisk_transmuted)
+
+meu_transmute <- transmute(voteincome, var = income/education)
+head(meu_transmute)
 
 #### `group_by` + `summarize`
 
@@ -302,7 +378,7 @@ PErisk_summarized <- summarize(PErisk,
                                barb2_media = mean(barb2, na.rm=T),
                                gdpw2_media = mean(gdpw2, na.rm=T)
 )
-head(PErisk_summarized)
+PErisk_summarized
 
 # E aqui usamos a média simples `mean`, 
 # para calcular médias (note o `, na.rm=T`: 
@@ -337,6 +413,15 @@ PErisk_summarized2 <- summarize(PErisk,
 )
 head(PErisk_summarized2)
 
+meu_summarize <- summarize(voteincome, 
+                           incMean = mean(income),
+                           incSD = sd(income),
+                           educMean = mean(education),
+                           educSD = sd(education),
+                           ageMean = mean(age),
+                           ageSD = sd(age))
+meu_summarize
+
 # No entanto, muitas vezes precisamos calcular 
 # essas estatísticas de acordo com grupos de 
 # valores para uma variável de agrupamento. 
@@ -352,6 +437,15 @@ PErisk_agrupado <- summarize(PErisk_agrupado,
                              gdpw2_media = mean(gdpw2, na.rm=T),
                              ncasos = n())
 head(PErisk_agrupado)
+
+meu_sum <- group_by(PErisk, courts)
+meu_sum <- summarize(meu_sum, 
+                     mediabarb2 = mean(barb2),
+                     sdbarb2 = sd(barb2),
+                     meangdp = mean(gdpw2),
+                     sdgdp = sd(gdpw2),
+                     ncasos = n())
+head(meu_sum)
 
 # O agrupamento não tem efeito prático, mas diz 
 # ao sistema que, caso utilizemos a função 
@@ -392,7 +486,7 @@ sample_n(PErisk_agrupado, 5)
 # independentes, e cinco casos que não tem judiciários 
 # independentes. Ainda, podemos amostrar frações do 
 # banco de dados usando a função `sample_frac`:
-sample_frac(PErisk, 0.1)
+sample_frac(PErisk, 2, replace = T)
 
 # E tiramos assim uma amostra de 10% dos dados 
 # (ou seja, 6 dos 62 casos de `PErisk`).
@@ -408,14 +502,33 @@ sample_frac(PErisk, 0.1)
 # 2. Agrupar os dados por presença e ausência de cortes;
 # 3. Calcular as médias das variáveis e retornar os resultados.
 
+meu_piped <- filter(PErisk, prscorr2 < 3)
+meu_piped <- group_by(meu_piped, courts)
+meu_piped <- summarize(meu_piped, 
+                       avgbarb2 = mean(barb2),
+                       avggdpw2 = mean(gdpw2))
+meu_piped
+
 # Uma vez decididas as tarefas, o uso fica simples:
 PErisk_piped <- PErisk %>% # Primeiro informamos o banco de dados
   filter(prscorr2 < 3) %>% # Passo 1
   group_by(courts) %>% # Passo 2
   summarize(barb2_media = mean(barb2, na.rm=T),
-            gdpw2_media = mean(gdpw2, na.rm=T),
-            gdpw2dol_media = exp(mean(gdpw2, na.rm=T))) # Passo 3
+            gdpw2_media = mean(gdpw2, na.rm=T)) # Passo 3
 PErisk_piped
+
+# 1. filter mulheres no voteincome
+# 2. agrupe por vote
+# 3. calcule média de income, education e age
+
+voteincome %>%
+  filter(female == 1) %>%
+  group_by(vote) %>%
+  mutate(gainbyeduc = income/education) %>%
+  summarize(income = mean(income),
+            educ = mean(education),
+            age = mean(age),
+            meangainbyeduc = mean(gainbyeduc))
 
 # E portanto, o operador `%>%` (*pipe*) permite montarmos 
 # uma função composta. Como em matemática temos funções 
@@ -435,7 +548,9 @@ PErisk_dupl
 
 # E queremos corrigir o erro, excluindo as observações 
 # repetidas. Para isso, usamos a função `distinct`:
-PErisk_distinct <- PErisk_dupl %>% distinct()
+PErisk_distinct <- 
+  PErisk_dupl %>% 
+  distinct()
 PErisk_distinct
 dim(PErisk_distinct)
 
@@ -600,8 +715,7 @@ dat2
 
 # O `inner_join` é útil para juntar bancos de dados 
 # preservando somente aqueles que aparecem nos dois bancos.
-dat3_innerjoin <- inner_join(dat1, dat2)
-dat3_innerjoin
+inner_join(dat1, dat2)
 
 # Ou seja, os casos incompletos (Argentina no primeiro 
 # banco não aparece no segundo banco, e Bolivia no segundo 
@@ -613,16 +727,14 @@ dat3_innerjoin
 # banco. Se algum caso não existe no segundo banco, 
 # o sistema preenche com NA os locais onde os dados 
 # estão ausentes.
-dat3_leftjoin <- left_join(dat1, dat2)
-dat3_leftjoin
+left_join(dat1, dat2)
 
 #### `right_join`
 
 # Junta todos os casos do segundo banco no primeiro. 
 # Se algum caso não existe no primeiro banco, o sistema 
 # preenche com NA os locais onde os dados estão ausentes.
-dat3_rightjoin <- right_join(dat1, dat2)
-dat3_rightjoin
+right_join(dat1, dat2)
 
 #### `full_join`
 
@@ -630,8 +742,7 @@ dat3_rightjoin
 # outro, independente de um caso aparecer em um banco 
 # e não em outro. Ele preenche os valores faltantes com 
 # NA em ambos os lados.
-dat3_fulljoin <- full_join(dat1, dat2)
-dat3_fulljoin
+full_join(dat1, dat2)
 
 #### `semi_join`
 
