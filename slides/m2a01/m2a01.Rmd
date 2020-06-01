@@ -1,0 +1,12 @@
+---
+title: "Aula 1 - Introdução à Estatística Básica"
+author: "Umberto Mignozzetti"
+date: "6/1/2020"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Modulo II
