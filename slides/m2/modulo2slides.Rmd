@@ -260,3 +260,70 @@ summary(x)
 ## Exercício
 
 - Faça uma análise dos dados da empresa MB.
+
+# Análise bidimensional
+
+## Análise Bidimensional
+
+- Três tipos:
+  + Quali x Quali
+  + Quali x Quant
+  + Quant x Quant
+
+## Associação Quali-Quali
+
+![f15](./f15.png){width=400px}
+
+## Associação Quali-Quali
+
+![f16](./f16.png){width=400px}
+
+## Associação Quali-Quali
+
+![f17](./f17.png){width=400px}
+
+## Associação Quali-Quali
+
+![f18](./f18.png){width=400px}
+
+## Associação Quali-Quali
+
+![f19](./f19.png){width=400px}
+
+## Associação Quali-Quali
+
+![f20](./f20.png){width=400px}
+
+## Associação Quali-Quali
+
+![f21](./f21.png){width=400px}
+
+## Associação Quali-Quali
+
+![f22b](./f22b.png){width=400px}
+
+# Quanti x Quanti
+
+## Quanti x Quanti: Correlação
+
+![f22](./f22.png){width=400px}
+
+## Quanti x Quanti: Correlação
+
+![f23](./f23.png){width=400px}
+
+## Quanti x Quanti: Correlação
+
+![f25](./f25.png){width=400px}
+
+## Quanti x Quanti: Correlação
+
+![f24](./f24.png){width=400px}
+
+## Quanti x Quanti: Correlação
+
+![f26](./f26.png){width=400px}
+
+## Exercício
+
+![f26b](./f26b.png){width=400px}
