@@ -306,24 +306,118 @@ summary(x)
 
 ## Quanti x Quanti: Correlação
 
+- A medida principal de associação entre duas variáveis quanti é o coeficiente de correlação.
+
+- O coeficiente de correlação é uma medida que varia entre -1 e 1 onde:
+  + Mais próximo de -1 significa correlação negativa
+  + Mais próximo de 0 significa ausência de correlação
+  + Mais próximo de 1 significa correlação positiva
+
+- Mas como funciona a correlação?
+
+## Quanti x Quanti: Correlação
+
+- Diagrama de dispersão: ajuda a observar os dados.
+  + Como fazer: colocar os dados em dois eixos coordenados.
+
 ![f22](./f22.png){width=400px}
 
 ## Quanti x Quanti: Correlação
+
+- Como correlação aparece no diagrama de dispersão:
+  + Na esquerda temos uma correlação positiva.
+  + No centro, correlação negativa.
+  + Na direita, correlação zero.
+  
+- Para calcular correlação precisamos medir a concentração dos dados nos quadrantes.
 
 ![f23](./f23.png){width=400px}
 
 ## Quanti x Quanti: Correlação
 
+- Para isso, fazemos os seguintes passos:
+  1. Subtraímos a média do valor de cada variável. Isso centraliza a variável no zero (fig. esquerda).
+  2. Dividimos pelo desvio-padrão: isso faz com que a unidade de variação da variável desapareça (fig. direita).
+
 ![f25](./f25.png){width=400px}
 
 ## Quanti x Quanti: Correlação
 
+- Olha como fica na tabela:
+
 ![f24](./f24.png){width=400px}
 
 ## Quanti x Quanti: Correlação
+
+- E essa é a fórmula:
 
 ![f26](./f26.png){width=400px}
 
 ## Exercício
 
 ![f26b](./f26b.png){width=400px}
+
+# Quali x Quanti: ANOVA
+
+## Quali x Quanti: ANOVA
+
+- Cruzar uma quali versus uma quanti é mais complicado.
+
+- Note esse cruzamento, entre salário e escolaridade:
+
+![f34](./f34.png){width=200px}
+
+\vspace{0.1cm}
+
+![f35](./f35.png){width=200px}
+
+## Quali x Quanti: ANOVA
+
+- Compare agora com esse cruzamento, entre salário e região de procedência:
+
+![f36](./f36.png){width=300px}
+
+## Quali x Quanti: ANOVA
+
+- Salário x Idade: aparentemente mais relacionadas
+
+- Salário x região: aparentemente menos relacionadas
+
+- Como medir a associação? Note as variâncias!
+
+## Quali x Quanti: ANOVA
+
+- Se compararmos as variâncias dentro dos grupos, com a variância total, temos uma medida!
+  + Essa medida é o quanto a nossa quali consegue explicar nossa quanti.
+  + O nome disso é ANOVA: ANalysis Of VAriance.
+  + Como fazer?
+  
+## Quali x Quanti: ANOVA
+
+- A variância intra grupo é a média ponderada da variância em cada grupo.
+
+- A gente calcula assim:
+  + Variância intra-grupo:
+$$ \overline{var(X)} = \dfrac{\sum_{i=1}^k n_ivar_i(S)}{\sum_{i=1}^k n_i} $$
+  + Variância total: variância dos dados: $var(X)$...
+
+## Quali x Quanti: ANOVA
+
+- Associação entre as variáveis: $R^2$:
+
+$$ 0 \leq R^2 = 1-\dfrac{\overline{var(X)}}{var(X)} \leq 1$$
+
+## Quali x Quanti: ANOVA
+
+![f37](./f37.png){width=400px}
+
+## Exercício
+
+- Calcule no banco MB a associação entre estado civil e idade.
+
+- Faça análises uni e bidimensional de uma das bases de dados que temos na pasta (escolha sua):
+  - `MB`
+  - `voteincome`
+  - `PErisk`
+
+# Px aula: probabilidade!
