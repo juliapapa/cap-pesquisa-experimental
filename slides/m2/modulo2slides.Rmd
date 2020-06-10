@@ -420,4 +420,710 @@ $$ 0 \leq R^2 = 1-\dfrac{\overline{var(X)}}{var(X)} \leq 1$$
   - `voteincome`
   - `PErisk`
 
-# Px aula: probabilidade!
+# Probabilidade
+
+## Probabilidade
+
+- Axiomas
+
+- Probabilidade Condicional
+
+- Teorema de Bayes
+
+- Distribuições de probabilidade
+
+- Lei dos Grandes Numeros e Teorema do Limite Central
+
+## Probabilidade
+
+- Está em todo lugar
+
+- Mas nós somos muito ruins em interpretar probabilidade
+
+- Ainda piores em estimar probabilidades...
+
+- Exemplo:
+  - Qual a chance de chover amanhã?
+  - Qual a chance de você ganhar na loteria?
+  
+- Monty Hall problem: (https://www.youtube.com/embed/_X5erR9LKUs)
+  
+## Probabilidade
+
+- Mas o que é probabilidade?
+
+  - Modelo matemático da incerteza
+
+- Linguagem:
+  - Experimento aleatório: uma ação ou conjunto de ações que produz eventos aleatórios de interesse
+    - Jogar moedas, bolinha na urninha, dados, etc
+  - Espaço Amostral: $(\Omega)$: possíveis resultados do experimento
+    - {cara, coroa}, {1,2,3,4,5,6}, {bolinha vermelha, bolinha azul}
+  - Evento: subconjunto do espaço amostral
+
+## Exemplo
+
+- Qual o espaço amostral do experimento: você joga uma moeda. Se der cara, você retira uma carta e anota o naipe. Se der coroa, você começa novamente?
+
+## Probabilidade
+
+- Probabilidade do evento A $= P(A) = \frac{\text{Casos favoráveis}}{\text{Casos possíveis}}$
+
+- Probabilidade de Cara $= P(H) = \frac{heads}{heads + tails} = \frac{1}{2}$
+
+- Qual a probabilidade de 3 caras em 3 jogadas de moeda?
+  - Espaço amostral?
+$$\Omega = \{HHH,HHT,HTH,THH, HTT, THT, TTH, TTT\}$$
+
+  - Qual evento estamos interessados?
+  
+  $$\{HHH\}$$
+  
+  - Qual essa chance?
+
+## Probabilidade
+
+- Qual a chance de pelo menos 2 caras em tres lançamentos?
+
+## Axiomas da probabilidade
+
+
+- Três axiomas:
+  - A probabilidade de qualquer evento está entre zero e um:
+  
+ $$0 \leq P(A) \leq 1$$
+ 
+  - A probabilidade do espaço amostral é 1:
+
+  $$P(\Omega) = 1$$
+
+ - Dois eventos mutuamente exclusivos:
+ 
+ $$P(A\ \textsf{or}\ B) \ = \ P(A) + P(B)$$
+
+## Permutação: ordem importa
+
+- Quantas possiveis maneiras temos de arranjar as letras A,B,C?
+  - 3 x 2 x 1
+
+- Permutações contam de quantos modos podemos ordenar $k$ objetos num conjunto com $n$ objetos únicos.
+
+$$_{n}P_{k} = n \times (n-1) \times (n-2) \times ... \times (n-k + 1) = \frac{n!}{(n-k)!}$$
+
+- De quantos modos podemos arranjar quatro cartas das 13 de espadas de um deck?
+
+## Combinações
+
+- Combinações: ordem não importa
+
+- ABC, BAC, CAB, etc são a mesma extração!
+
+- Sempre temos menos combinações que permutações
+
+- E.g.: duas letras de ABC:
+  - Permutações:
+    - AB, AC, BA, BC, CA, CB =  $\frac{3!}{1!}$
+
+  - Combinações:
+    - AB, AC, BC
+
+## Como calcular combinações
+
+- Estamos contando sempre a mais!
+
+- Basta retirar alguns elementos: mesmas permutações dos elementos: dividir por $k!$
+
+- $_{n}C_{k} = {n \choose k} = \frac{_{n}P_{k}}{k!} = \frac{n!}{k!(n-k)!}$
+
+## Exemplo: ganhar na mega-sena!
+
+- Qual a chance de ganhar na mega-sena?
+
+# Probabilidade Condicional
+
+## Probabilidade Condicional
+
+- As vezes, informações sobre um evento ajudam a mudar as expectativas sobre outros eventos.
+
+- Exemplos?
+  - Qual a probabilidade de rolar um 5 e depois um 6, se você rolou um 5 primeiro?
+  - If it is cloudy outside, gives us additional information about likelihood of rain.
+  - If we know that one party will win the House, makes it more likely that party will win certain Senate races
+
+## Independencia
+
+- If the occurrence of one event (A) gives us information about the likelihood of another event, then the two events are not independent.
+
+- \alert{Independencia} of two events implies that information about one event does not help us in knowing whether the second event will occur.
+
+- For many real world examples, independence does not hold
+
+- Knowledge about other events allows us to improve guesses/probability calculations
+
+## Independence
+
+- When two events are independent, the probability of both happening is equal to the individual probabilities multiplied together
+
+- And what is the probability of one event when it is conditional to each another?
+
+## Conditional Probability
+
+- $P(A | B)$
+
+- _Probability of A given/conditional that B has happened_
+
+- $P(A | B) = \frac{P(A and B)}{P(B)}$
+
+- _Probability of A and B happening (joint) divided by probability of B happening (marginal)_
+
+- Definitions:
+
+  - $P(A and B)$ - joint probability
+
+  - $P(A)$ - marginal probability
+
+## Conditional Probability
+
+- P(rolled 5 then 6) = ?
+
+- P(rolled 5 then 6) = $\frac{1}{36}$
+
+- P(rolled 5 then 6 | 5 first) =  $\frac{P(5 then 6)}{P(5)}$
+
+- $\frac{\frac{1}{36}}{\frac{1}{6}} = \frac{1}{6}$
+
+## Conditional Probability
+
+- The probability that it is Friday and that a student is absent is 0.03. What is the probability that student is absent, given that it is Friday?
+
+- $P(absent | Friday) = ?$
+
+\pause - $P(absent | Friday) = \frac{0.03}{0.2} = 0.15$
+
+## Conditional Probability
+
+- $P(A | B) = \frac{P(A and B)}{P(B)}$
+
+- Also means:
+
+- $P(A and B) = P(A | B) P(B)$
+
+- Just multiply both sides by $P(B)$ to get rid of the denominator
+
+- If A and B are independent, then
+  - $P(A | B) = P(A) \&  P(B | A) = P(B)$
+  
+  - $P(A and B) = P(A) \times P(B)$
+
+- If $A|C$ and $B|C$ are independent, then
+  - $P(A and B | C) = P(A |C) \times P(B | C)$
+
+## Example
+
+| Annual income     | Didn't Take Stats    | Took Stats    | TOTAL |
+| :---------------- | :------------------- | :------------ | :---- |
+| Under 50,00       | 36                   | 24            | 60    |
+| 50,000 to 100,000 | 109                  | 56            | 165   |
+| Over 100,000      | 35                   | 40            | 75    |
+| Total             | 180                  | 120           | 300   |
+
+- What is the probability of any student making over $100,000?
+
+- What is the probability of a student making over $100,000, conditional that she took Stats?
+
+- What is the probability of a having taken Stats, conditional on  making over $100,000?
+
+## A Slightly Harder Example
+
+- John's two favourite foods are bagels and pizza. $A$ represents the event he eats bagel for breakfast and $B$ represents the event that he eats pizza for lunch.
+
+- On a random day, the probability John will eat a bagel, $P(A)$, is $0.6$, the probability he will eat pizza is $P(B) = 0.5$, and the conditional probability that he eats a bagel for breakfast, given that he eats pizza for lunch is $P(A|B) = 0.7$
+
+- Based on this information, what is $P(B|A)$, that is, the probability that John will eats pizza for lunch given that he eats a bagel for breakfast?
+
+## Bayes' Theorem
+
+- $P(A)$ = prior probability
+
+- $P(A | B)$: posterior probability of event $A$ given observed data $B$
+
+- $P(B | A)$: probability of observing $B$ given $A$
+
+- $P(B)$: probability of observing $B$.... including both true and false positives!
+
+- Imagine you have a serious disease. It is a rare disease, it happens only to 0.1% of the population. The test identifies the disease correctly in 99% of the cases, but incorrectly in 1% of them. If your test is positive, what is the probability you actually have the disease?
+
+## Medical Test
+
+- $$P(H|E) = \frac{P(E|H) \times P(H)}{P(E)}$$
+
+- $$P(H|E) = \frac{P(E|H) \times P(H)}{P(E|H) \times P(H) + P(E|H^c) \times P(H^c)}$$
+
+- $$P(disease|test+) = \frac{P(test+|disease) \times Prior(disease)}{P(test+) = \operatorname{true and false positives}}$$
+
+## Medical Test
+
+- Imagine you have a serious disease. It is a rare disease, it happens only to 0.1% of the population. The test identifies the disease correctly in 99% of the cases, but incorrectly in 1% of them. If your test is positive, what is the probability you actually have the disease?
+
+- $$P(H|E) = \frac{.99 \times .001}{.001 \times .99 + .999 \times .01} \approx .09 \approx 9\%$$
+
+- Out of 1,000 people, 1 will actually have the disease
+
+- But 10 people will be tested positive _and will not have the disease_
+
+- Which means that 11 people will be tested positive overall
+
+- So we have $\frac{1}{11} \approx .09 \approx 9\%$
+
+# Random Variables
+
+## Variáveis aleatórias
+
+- What is a random variable? We assign a number to an event
+    - Coin flip: tail = 0; heads = 1
+    - Mayor's election: Bruno Covas = 0; Joyce Hasselman = 1
+    - Voting: vote = 1; not vote = 0
+    
+- The values of random variables must represent _mutually exclusive and exhaustive events_
+    
+- Probability distribution: Probability that a random variable takes a certain value
+    - P(coin = 1); P(coin = 0)
+    - P(election = 1); P(election = 0)
+
+- Your turn: A fair coin is tossed two times. Consider the random variable: number of heads. What is its distribution?
+
+## Random Variables and Probability Distributions
+
+- \alert{Probability density function (PDF):} $f(x)$ 
+    - Probability that a random variable $X$ takes a particular value. 
+    - Associated with continuous variables, must be integrated over an interval
+    
+- \alert{Probability mass function (PMF):} when $X$ is discrete, $f(x) = P(X = x)$. Only discrete random variables have PMFs
+
+- \alert{Cumulative distribution function (CDF):} $f(x) = P(X \leq x)$
+    - What is the probability that a random variable $X$ takes a value equal to or less than $x$?
+    - Area under the density curve (we use $\sum$ or $\int$)
+
+## Statistics of a Random Variable: Mean
+
+- A random variable has support where the density function is defined. For example: the die has support in the numbers $\{1,2,3,4,5,6\}$.
+
+- The support for the die is: $S = \{1,2,3,4,5,6\}$.
+
+- Mean: the mean of a random variable $x$, with distribution $f(x)$ is defined as:
+
+$$ \mathbb{E}(x) = \sum_{x_i \in S} x_if(x_i) $$
+
+- The mean is a measure of **centrality** in the data!
+
+## Statistics of a Random Variable: Variance
+
+- Variance: the variance of a random variable $x$, with distribution $f(x)$ is defined as:
+
+$$ \mathbb{V}(x) = \sum_{x_i \in S} (x_i-\mathbb{E}(x))^2f(x_i) $$
+
+- Variance: measures the **dispersion** in the data. 
+
+- The **standard deviation** is the square-root of the variance.
+
+- Your turn: consider the random variable *die face number*. What is the mean and variance of this random variable?
+
+# Discrete distributions
+
+## Uniform distribution
+
+- Uniform distribution: all values in the (discrete) support have the same chance of get selected.
+
+- Examples: 
+  - Coin toss.
+  - Dice.
+  - Put the 26 letters in a box and select one letter.
+
+- Definition: If the support is $\{x_1, \cdots x_k\}$, the variable has uniform distribution iff:
+
+$$\mathbb{P}(x_i) = \dfrac{1}{k} $$
+
+## Bernoulli trial
+
+- Bernoulli trial is a distribution named after the mathematician Jacob Bernoulli.
+
+- A trial consists in a binary event with two possible outcomes: success (1) or failure (0).
+
+- The probability distribution is equal to:
+
+$$ \mathbb{P}(Success) = \mathbb{P}(1) = p $$
+
+With $p\in[0,1]$.
+
+- Your turn: what is the mean and variance of a Bernoulli trial?
+
+## Binomial Distribution
+
+- The binomial distribution shows the number of successes in repeated Bernoulli trials.
+
+- What is a repeated trial?
+
+- E.g. suppose 90% of people in a given town likes the mayor. If we randomly select 100 people, what is the chance that at least 80 people out of 100 like the mayor?
+  - 100 Bernoulli trials!
+
+## Binomial Distribution
+
+- \alert{PMF:} for $x \in \{0, 1, \dots, n\}$,
+
+$$f(x) \ = \ P(X = x) \ = \ {n \choose x} p^x (1-p)^{n-x}$$ 
+
+- \alert{PMF} tells us what is the probability of $x$ _successes_ given $n$ trials with with $P(x) = p$
+
+- In `R`:
+
+```{r binom01,fig.align="center",tidy=F,warning=F,message=F,cache=T}
+# prob of 2 successes in 4 trials
+dbinom(2, size = 4, prob = 0.5) 
+```
+
+## Binomial Distribution
+
+- \alert{CDF:} for $x \in \{0, 1, \dots, n\}$
+
+$$f(x) \ = \ P(X \le x) \ = \ \sum_{k = 0}^x {n\choose k} p^k (1-p)^{n-k}$$
+
+- \alert{CDF} tells us what is the probability of _x or fewer successes_ given $n$ trials with $P(x) = p$
+
+- In `R`:
+
+```{r binom02,fig.align="center",tidy=F,warning=F,message=F,cache=T}
+# prob of 2 or fewer (= 0,1,2) successes in 4 trials
+pbinom(2, size = 4, prob = 0.5)
+```
+
+## PMF and CDF
+
+- CDF of $F(x)$ is equal to the sum of the results from calculating the PMF for all values smaller and equal to $x$
+
+- In `R`
+
+```{r binom03,fig.align="center",tidy=F,warning=F,message=F,cache=T}
+pbinom(2, size = 4, prob = 0.5) # CDF
+sum(dbinom(c(0, 1, 2), 4, 0.5)) # summing up the PDFs
+```
+
+## Binomial Distribution
+
+- Example: flip a fair coin 3 times
+
+$$f(x) \ = \ P(X = x) \ = \ {n \choose x} p^x (1-p)^{n-x}$$ 
+    
+$$f(x) \ = \ P(X = 1) \ = \ {3 \choose 1} 0.5^1 (1-0.5)^{3-1} = 0.375$$
+    
+```{r binom04,fig.align="center",tidy=F,warning=F,message=F,cache=T}
+dbinom(1, 3, 0.5)
+```
+
+## Binomial Distribution
+
+```{r binom05,fig.align="center",tidy=F,warning=F,message=F,cache=T,fig.height=6}
+x <- 0:3
+barplot(dbinom(x, size = 3, prob = 0.5), ylim = c(0, 0.4), 
+        names.arg = x, xlab = "x", 
+        ylab = "Density", main = "Probability mass function")
+```
+
+## Binomial Distribution
+
+```{r binom06,fig.align="center",tidy=F,warning=F,message=F,cache=T,eval=FALSE}
+x <- -1:4
+pb <- pbinom(x, size = 3, prob = 0.5)
+
+plot(x[1:2], rep(pb[1], 2), ylim = c(0, 1), type = "s", 
+     xlim = c(-1, 4), xlab = "x",ylab = "Probability",
+     main = "Cumulative distribution function")
+
+for (i in 2:(length(x)-1)) {
+    lines(x[i:(i+1)], rep(pb[i], 2))
+}
+
+points(x[2:(length(x)-1)], pb[2:(length(x)-1)], pch = 19)
+points(x[2:(length(x)-1)], pb[1:(length(x)-2)])
+```
+
+## Binomial Distribution
+
+```{r binom07,fig.align="center",tidy=F,warning=F,message=F,cache=T,echo=FALSE,fig.height=8}
+x <- -1:4
+pb <- pbinom(x, size = 3, prob = 0.5)
+
+plot(x[1:2], rep(pb[1], 2), ylim = c(0, 1), type = "s", 
+     xlim = c(-1, 4), xlab = "x",ylab = "Probability",
+     main = "Cumulative distribution function")
+
+for (i in 2:(length(x)-1)) {
+    lines(x[i:(i+1)], rep(pb[i], 2))
+}
+
+points(x[2:(length(x)-1)], pb[2:(length(x)-1)], pch = 19)
+points(x[2:(length(x)-1)], pb[1:(length(x)-2)])
+```
+
+# Continuous Distributions
+
+## Continuous Distributions
+
+- A function $X$ defined in the sample space $\Omega$, and assuming values in real line intervals is said a continuous probability distribution.
+
+- Properties:
+  - Integral in the support equals to 1:
+  
+  $$ \int_{-\infty}^{\infty} f(x)dx = 1 $$
+  - The probability of an event in $[a,b]$ is:
+  
+  $$ \mathbb{P}([a,b]) = \int_{a}^{b} f(x)dx $$
+  - The mean of the random variable is equal to:
+  
+  $$ \mathbb{E}(X) = \int_{-\infty}^{\infty} xf(x)dx $$
+
+## Uniform Distribution
+
+- A distribution is uniform between the numbers $\alpha$ and $\beta$ iff any number in the interval has the same chance of happening.
+
+- The PDF in $[\alpha,\beta]$ is equal to: 
+
+$$ f(x; \alpha, \beta) = \dfrac{1}{\beta-\alpha} $$
+
+- Your turn: compute the
+  - Mean
+  - Variance
+
+## Normal Distribution
+
+* The \alert{normal distribution} is also called the \alert{Gaussian distribution}
+
+* Takes on values from $-\infty$ to $\infty$
+
+* Defined by two parameters: $\mu$ and $\sigma^2$
+    - Mean and variance (standard deviation squared)
+
+* Mean defines the location of the distribution
+
+* Variance defines the spread
+
+## Normal Distribution
+
+* \alert{Normal distribution} with mean $\mu$ and standard deviation $\sigma$
+
+* \alert{PDF:} $f(x) \ = \ \frac{1}{\sqrt{2\pi} \sigma}\exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right)$ 
+
+- \alert{CDF:} $F(x) \ = \ P(X \le x) \ = \ \int_{-\infty}^x \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(t - \mu)^2}{2\sigma^2}\right) dt$
+
+## Normal Distribution
+
+- Normal distribution is symmetric around the mean
+
+- Mean = Median
+
+```{r norm03,fig.align="center",tidy=F,warning=F,message=F,cache=T,eval=FALSE}
+# Different types of normal distributions
+x <- seq(from = -7, to = 7, by = 0.01)
+plot(x, dnorm(x), xlab = "x", ylab = "density",
+     type = "l",main = "Probability density function",
+     ylim = c(0, 0.9))
+lines(x, dnorm(x, sd = 2), col = "red")
+lines(x, dnorm(x, mean = 1, sd = 0.5), col = "blue")
+```  
+
+## Normal Distribution 
+
+```{r norm04,fig.align="center",tidy=F,warning=F,message=F,cache=T,echo=FALSE,fig.height=8}
+# Different types of normal distributions
+x <- seq(from = -7, to = 7, by = 0.01)
+plot(x, dnorm(x), xlab = "x", ylab = "density",
+     type = "l",main = "Probability density function",
+     ylim = c(0, 0.9))
+lines(x, dnorm(x, sd = 2), col = "red")
+lines(x, dnorm(x, mean = 1, sd = 0.5), col = "blue")
+```  
+
+## Normal Distribution
+
+* Curve of \alert{any} normal distribution:
+
+* Symmetric around the mean
+
+* Total area under the curve is 1.00
+
+* Area between -1SD and +1SD is ~0.68
+
+* Area between -2SD and +2SD is ~0.95
+
+* Area between -3SD and +3SD is ~0.997
+
+## Normal Distribution
+
+```{r norm05,fig.align="center",tidy=F,warning=F,message=F,cache=T, eval=FALSE}
+x <- seq(from = -7, to = 7, by = 0.01)
+lwd <- 1.5
+plot(x, dnorm(x), xlab = "x", ylab = "density",
+     type = "l",main = "Probability density function",
+     ylim = c(0, 0.9))
+abline(v = -1, col = "red")
+abline(v = 1, col = "red")
+abline(v = -2, col = "blue")
+abline(v = 2, col = "blue")
+abline(v = -3, col = "black")
+abline(v = 3, col = "black")
+```
+
+## Normal Distribution
+
+```{r norm06,fig.align="center",tidy=F,warning=F,message=F,cache=T, echo=FALSE,fig.height=8}
+x <- seq(from = -7, to = 7, by = 0.01)
+lwd <- 1.5
+plot(x, dnorm(x), xlab = "x", ylab = "density",
+     type = "l",main = "Probability density function",
+     ylim = c(0, 0.9))
+abline(v= -1, col = "red")
+abline(v= 1, col = "red")
+abline(v= -2, col = "blue")
+abline(v= 2, col = "blue")
+abline(v = -3, col = "black")
+abline(v = 3, col = "black")
+```
+
+## Expectations, Means, and Variances
+
+* For probability distributions, means _should not be confused with sample means_
+
+* Expectations or means of a random variable have specific meaning for the probability distribution
+
+* A sample mean varies from sample to sample
+
+* Mean of a probability distribution is a theoretical construct and constant
+
+* Example: Age of undergraduates at FGV
+
+## Law of Large Numbers
+
+* In many probabilistic models, certain patterns emerge as the sample size increases
+
+* \alert{Law of Large Numbers:} If we have a sample of i.i.d. observations from random variable $X$ with expectation $\mathbb{E}(X)$, then
+
+$$\bar{X}_{{n}} = \frac{1}{N} \sum_{i = 1}^{N} X_{i} \rightarrow \mathbb{E}(X)$$]
+
+- \alert{i.i.d.:} independent and identically distributed random variable.
+
+- In English: As the number of draws increases, the sample mean $\bar{X}_{{n}}$ approaches $\rightarrow$ the variable's distribution expectation $\mathbb{E}(X)$
+
+## Law of Large Numbers
+
+* Examples
+	- Rolling a die, 500 times
+	- Flipping a coin, also many times
+	- Drawing respondents from a population of supporters and non-supporters for politician A
+	- Statistical simulations
+
+## Simulation: Coin Tossing
+
+```{r coin01,fig.align="center",tidy=F,warning=F,message=F,cache=T,fig.height=7,eval=FALSE}
+draws <- seq(from = 1, to = 500)  # coin tosses
+
+avgs <- rep(NA, length(draws))    # empty vector
+
+for(i in 1:length(draws)){
+    samp <- sample(c(0, 1), draws[i], replace = T)
+    avgs[i] <- mean(samp) # sampling w/ replacement
+}
+
+plot(draws, avgs, type = "l", ylim = c(0, 1),
+     main = "Bernoulli with Prob. 0.5") # plot
+abline(h = 0.5, col = "red", lwd = 2)  # expectation 
+```
+
+## Simulation: Coin Tossing
+
+```{r coin02,fig.align="center",tidy=F,warning=F,message=F,cache=T,fig.width=10,fig.height=8,echo=FALSE}
+draws <- seq(from = 1, to = 500) # number of draws
+
+avgs <- rep(NA, length(draws))   # empty vector 
+
+for(i in 1:length(draws)){       # sample numbers, take mean
+    samp <- sample(c(0,1), draws[i], replace = T)
+    avgs[i] <- mean(samp)
+}
+
+plot(draws, avgs, type = "l", ylim = c(0, 1),
+     main = "Bernoulli with Prob. 0.5") # plot
+abline(h = 0.5, col = "red", lwd = 2)   # add line
+```
+
+## Simulation: Rolling a Die 
+
+```{r die01,fig.align="center",tidy=F,warning=F,message=F,cache=T,eval=FALSE}
+draws <- seq(from = 1, to = 500) # number of draws
+
+avgs <- rep(NA, length(draws))   # empty vector 
+
+for(i in 1:length(draws)){       
+    samp <- sample(c(1:6), draws[i], replace = T)
+    avgs[i] <- mean(samp)  # sampling w/ replacement
+}
+
+plot(draws, avgs, type = "l", ylim = c(0, 6),
+     main = "Uniform [1, 6]") # plot
+abline(h = 3.5, col = "red", lwd = 2)         # expectation
+```
+
+## Simulation: Rolling a Die 
+
+```{r die02,fig.align="center",tidy=F,warning=F,message=F,cache=T,fig.height=8,fig.width=10,echo=FALSE}
+draws <- seq(from = 1, to = 500)
+
+avgs <- rep(NA, length(draws))
+
+for(i in 1:length(draws)){
+    samp <- sample(c(1:6), draws[i], replace = T)
+    avgs[i] <- mean(samp)
+}
+
+plot(draws, avgs, type = "l", ylim = c(0, 6))
+abline(h = 3.5, col = "red", lwd = 2)
+```
+
+## Central Limit Theorem
+
+- In practice we observe only the sample mean and _do not know the expectation_
+
+- \alert{The central limit theorem} shows that the distribution of the sample mean approaches the normal distribution as the sample size increases
+
+- Again, not the sample itself approaches the normal distribution, \alert{but only the sample means}
+
+- Z-score of the sample mean converges in distribution to the standard normal distribution or $\mathcal{N}(0,1)$ as the sample size increases
+
+- Interestingly the result is true \alert{for almost any distribution!}
+
+## Central Limit Theorem
+
+* Experiment: flip a coin 10 times and record the number of heads
+
+* Repeat experiment above 1000 times
+
+## Central Limit Theorem
+
+```{r clt01,fig.align="center",tidy=F,warning=F,message=F,cache=T,fig.height=5}
+avgs <- rep(NA, 1000)
+for(i in 1:1000){
+  samp <- rbinom(1000, 10, p=0.5)
+  avgs[i] <- mean(samp)
+}
+plot(density(avgs))
+```
+
+## Central Limit Theorem
+
+* _Why do we care about it?_
+
+* Hypothetically repeated polls with sample size $N$
+
+* As the number of polls increase, we get closer and closer to the true population mean, _regardless of the distribution of the each particular poll_
+
+* Since we are taking the means of each poll, rare events become even more rare
+
+* It is really hard to get a "weird average" versus to get a "weird individual." That difficulty in getting a weird average is what pulls the plot into a nice tight bell curve.
