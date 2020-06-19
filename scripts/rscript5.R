@@ -3,9 +3,9 @@ Pinf <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-expe
 vinc <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/bancos_de_dados/voteincome.csv')
 data(USArrests)
 Chile <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/bancos_de_dados/Chile.csv')
-Duncan <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/bancos_de_dados/Duncan.csv', row.names = T)
+Duncan <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/bancos_de_dados/Duncan.csv')
 Anscombe <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/bancos_de_dados/Anscombe.csv')
-turnout <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/bancos_de_dados/turnout.csv', row.names = T)
+turnout <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/bancos_de_dados/turnout.csv')
 sanction <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/bancos_de_dados/sanction.csv')
 
 #########################
@@ -15,6 +15,8 @@ sanction <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-
 
 # Grafico:
 mosaicplot(y~collegeDegree, data=Pinf)
+
+# exercício: organize os níveis de y
 
 # Suposi????o: existe uma rela????o entre escolaridade e informa????o pol?tica.
 # Hip?tese: quanto maior a escolaridade mais interesse por pol?tica.
@@ -49,7 +51,7 @@ summary(thip1)
 # Ou seja, como o p-valor ? baix?ssimo, aceitamos a hip?tese alternativa.
 
 ## Segundo teste:
-bwplot(y~age, data=Pinf)
+boxplot(age~y, data=Pinf)
 
 # Suposi????o: existe uma rela????o entre idade e informa????o pol?tica.
 # Hip?tese: quanto maior a idade mais interesse por pol?tica.
@@ -115,12 +117,10 @@ chisq.test(tabela) # Hipotese nula nao serviu...
 
 ## Vejamos outro teste de hip?tese...
 # Como sempre come?amos pela an?lise gr?fica
-par("mfcol"=c(2,2)) 
 plot(Murder~Assault, data=USArrests)
 plot(Murder~Rape, data=USArrests)
 plot(Assault~Rape, data=USArrests)
 plot(Murder~UrbanPop, data=USArrests) 
-par("mfcol"=c(1,1))
 
 # Suposi????o: as vari?veis escolhidas est?o correlacionadas.
 # Hip?tese: quando eu aumento uma delas as outras aumentam.
@@ -152,7 +152,6 @@ detach(USArrests)
 ## Testes para as m?dias:
 # Hip?tese:
 boxplot (age~vote, data=vinc)
-bwplot(age~vote, data=vinc)
 
 # Ou seja, se h? diferen?a entre a m?dia de idade do sujeito que vota em
 # compara????o do que o que n?o vota.
@@ -179,14 +178,11 @@ t.test(age~vote, data=vinc, alternative="less")
 
 ## Teste de variancias:
 
-# Vendo o que tem aqui...
-help(turnout)
-
 ## Teste para as veri?ncias:
 # ? importante saber se a vari?ncia se comporta de modo igual nos niveis
 # principalmente porque isso ajuda a dar poder a um teste, por exemplo, de
 # diferen?a de m?dias. Vamos motivar com dados:
-bwplot (vote~income, data=turnout)
+boxplot(income~vote, data=turnout)
 
 # Ou seja, a variabilidade de ambos parece ser bem diferente...
 # So...
@@ -204,7 +200,7 @@ detach(turnout)
 ## Teste para m?dia com vari??ncia desigual:
 # Vamos testar a hip?tese, para os dados acima, de que h? diferen?a na renda
 # com rela????o ao voto. Da?:
-bwplot (vote~income, data=turnout)
+boxplot (income~vote, data=turnout)
 
 # H_zero: n?o h? diferen?a
 # H_a: diferen?a positiva (quem vota tem mais renda)
@@ -254,7 +250,7 @@ detach(vinc)
 # S? por quest?o de honra, vamos 'criar' um conjunto de dados normais
 meus_dados = rnorm(2000, mean=5, sd=7)
 hist(meus_dados) # T? bonito...
-bwplot(meus_dados)
+boxplot(meus_dados)
 
 qqnorm(meus_dados); qqline(meus_dados, col=2) # T? lindo...
 
@@ -272,7 +268,7 @@ shapiro.test(meus_dados)
 
 # Para nossos exemplos acima, encontramos que a distribui????o normal n?o ? uma
 # boa... Vamos ent?o usar teste de Wilcoxon:
-bwplot (vote~income, data=turnout)
+boxplot (income~vote, data=turnout)
 
 # H_zero: a estat?stica de posto apontam para a igualdade de m?dias
 # H_a: apontam para diferen?a das m?dias
@@ -282,7 +278,7 @@ wilcox.test(income~vote, data=turnout)
 
 ## Anova n?o param?trica: Kruskal-Wallis
 # Relembrando do nosso conjunto de dados acima referido:
-bwplot(age~y, data=Pinf)
+boxplot(y~age, data=Pinf)
 
 # H_zero: N?o h? diferen?a na m?dia de idade quando controlamos o interesse
 # por pol?tica;
@@ -299,19 +295,6 @@ x = c(0,1,1,3,4,5,5,6,6,7,8,8,9,9,10,11,12)
 y = c(21,20,19,21,24,22,27,27,26,26,25,28,27,29,26,30,29)
 plot(x,y,col = 10,pch=16,xlab="vari?vel explicativa", ylab="vari?vel explicada",
      main="Qual a melhor reta que ajusta estes dados?")
-
-#######################################################
-##       Passos na An?lise de Regress?o              ##
-#######################################################
-## 1)Formula????o do problema                          ##
-## 2)Sele????o de vari?veis potencialmente relevantes  ##
-## 3)Coleta de dados                                 ##
-## 4)Especifica????o do modelo                         ##
-## 5)Escolha do m?todo de ajustamento                ## 
-## 6)Ajustamento dos dados                           ##
-## 7)Valida????o e cr?tica do modelo                   ##
-## 8)Uso do modelo para resolver o problema proposto ##
-#######################################################
 
 #######################################
 ## Regress?o Linear - Duas Vari?veis ##
@@ -605,12 +588,9 @@ resettest(modelo)
 ## Exerc?cio:
 # Vamos carregar o banco Anscombe
 # U. S. State Public-School Expenditures
-data(Anscombe)
+head(Anscombe)
 
 # Seu dever ?? formular um modelo para o gasto com educacao...
-# As vari?veis que voc? tem s?o:
-help(Anscombe)
-
 # 5 minutos... Teste a consist?ncia do modelo...
 
 ## Aplicando transforma????es ?s vari?veis:
@@ -632,6 +612,8 @@ summary(modelo)
 # Duncan's Occupational Prestige Data
 
 pairs(Duncan) # Vamos observar alguns padr?es...
+row.names(Duncan) <- Duncan$X
+Duncan$X <- NULL
 
 # Ou seja, a gra?a neste banco ? que as vari?veis est?o correlacionadas
 # entre si e da?, teremos situa????es interessantes para testarmos...
@@ -750,7 +732,8 @@ gqtest (modelo) # Tambem e homocedastico...
 vif(modelo) # Ok...
 
 # Correla????es parciais...
-cr.plots(modelo, ask=F)
+library(car)
+crPlots(modelo, ask=F)
 
 # Teste de especifica????o de Ramsey:
 resettest(modelo)
@@ -845,161 +828,5 @@ plot(modelo,1)
 modelo <- lm(I(log(population))~year, data=USPop)
 modelo
 summary(modelo)
-
-## Regress??o Log?stica
-
-# Usamos este tipo de modelo para estimarmos parametros para variaveis
-# cuja resposta n??o ? mais num?rica, e sim, bin?ria. Ou seja, 0 ou 1,
-# Tem ou n??o tem uma caracteristica e etc...
-
-# Vamos experimentar este banco de dados:
-data(turnout)
-summary(turnout)
-
-# Agora vamos montar um modelo para estimar a probabilidade de um
-# cara votar ou n??o de acordo com os outros par?metros:
-regvoto <- lm (vote~., data=turnout)
-regvoto
-
-# E observando nosso ajuste:
-summary(regvoto)
-
-# Esse modelo ? chamado de MPL, ou seja, modelo de probabilidade linear
-# ? uma regress??o linear normar, mas sabemos que a vari?vel resposta ?
-# bin?ria. Da?, este modelo n??o ? bom para nossos prop?sitos.
-
-# Um modelo melhor ? o chamado logit. Ele associa ao componente
-# sistem?tico uma fun????o do tipo 1/(1+exp(-x*beta)) que naturalmente
-# varia entre zero e um, tal como nossa vari?vel resposta.
-# Os resultados deste modelo chamamos de log de razoes de chance
-# pois desenvolvendo este modelo, chegamos em algo linear do tipo:
-# log(prob/(1-prob)) = a + b1*x1 + ... + bn*xn que ? linear.
-# raz??o de chance porque usamos prob/(1-prob), ou seja, prob de tirar
-# 1 e 1-prob de tirar zero por exemplo.
-regvoto <- glm(vote~race+age+educate+income, data=turnout, family=binomial)
-regvoto
-
-# Ou seja, temos nossa resposta em forma de log de razoes de chance.
-# Se quisermos passar para a 'nossa lingua':
-
-exp(coef(regvoto)) # Para as razoes de chance...
-summary(regvoto)
-
-# Para nossas estat?sticas:
-summary(regvoto)
-anova(regvoto)
-
-# O objetivo aqui ? reduzir o res?duo do desvio. Podemos ver que
-# Cada novo preditor melhora esta estat?stica (a reduz), portanto
-# Nosso modelo ? legalzinho.
-
-## Modelo Probit
-# Eu pessoalmente, n??o sei qual a diferen?a entre um e
-# outro. Acho que seja o 'peso' da curva, em alguns pontos
-# mais pesada em outros menos... Bom um modelo probit com os dados
-# acima ficaria:
-regvotop <- glm(vote~., data=turnout, family=binomial("probit"))
-regvotop
-
-# As estat?sticas deste modelo:
-summary(regvotop)
-anova(regvotop)
-
-# Ao que est? me parecendo, os erros padr??o da logit e da probit
-# s??o razoavelmente diferentes. Os estimadores, por sua vez,
-# s??o mais ou menos parecidos e, a redu????o dos desvios, isso ?
-# igual.
-
-# Um outro modelo legal, com o mesmo princ?pio ? o de estimar
-# voto novamente mas com um conjunto de dados um pouco diferente:
-data(voteincome)
-summary(voteincome)
-
-# O modelo ser? ent??o vote ~ income+education+age+female e da?,
-regp <- glm (vote ~ income+education+age+female, 
-             data=voteincome, family=binomial("probit"))
-
-# Se voce ainda n??o notou, n??o usamos lm para estes modelos
-# e sim glm, que significa general linear models.
-regp
-
-# E nossas estat?sticas:
-summary(regp)
-anova(regp)
-
-# A interpreta????o do modelo no R n??o ? muito f?cil.
-# Na verdade, esse modelo n??o ? facil em nenhuma ocasi??o. Basta
-# ent??o interpretarmos os sinais dos coeficientes.
-
-# Ou seja, um modelo legal...
-
-## Regress??o Ordinal
-# Um modelinho que falassemos de RI est? pedindo para entrar
-# na festa! Vamos ent??o falar de RI!
-# Neste modelo, vamos usar um conjunto de dados seguinte:
-
-# Ok, o help n??o ajudou em nada...
-# Vamos neste primeiro modelo usar regress??o Ordinal Logistica.
-# Para tanto, devemos ordenar nossas vari?veis. S? por desencargo:
-summary(sanction)
-pairs(sanction, gap=0) # N??o ajudou em nada... melhor o summary neste caso...
-
-# Para o sistema entende-la como ordinal devemos aplicar a ordem dos
-# fatores. Assim:
-sanction$ncost <- factor(sanction$ncost, ordered = TRUE, 
-                         levels = c("net gain", "little effect", "modest loss", 
-                                    "major loss"))
-# Onde 'ordered=T', informa para o sistema que temos uma ordinal e
-# a ordem ? dada pela ordem de apari????o dos 'levels'. Ou seja:
-
-sanction$ncost # Repare em baixo...
-
-# Da?, devemos aplicar a fun????o polr do pacote MASS.
-# Ou seja, proportional odds logistic regression. So...
-regRI <- polr (ncost ~ mil + coop + import, data=sanction, method="logistic")
-regRI
-
-# Ou seja, ? uma logistica normal, a diferen?a ? que tem em baixo,
-# as diversas faixas de corte para a passagem entre as
-# categorias.
-
-# As estat?sticas:
-summary(regRI)
-
-# Eu chamo os diversos interceptos de raz??o de passagem entre
-# as categorias. N??o sei se isto ? correto mas me parece que
-# este ? o significado.
-
-# Agora o mesmo modelo s? que ordinal probit:
-regRI <- polr (ncost ~ mil + coop + import, data=sanction, 
-               method="probit", Hess=T)
-regRI
-
-# Ou seja, a raz??o de passagem se altera, isto ?, o 'peso' da fun????o 
-# interfere na regres??o...
-# Um sum?rio...
-summary(regRI)
-
-# Uma outra regress??o deste tipo podemos fazer para os dados de
-# PErisk. Vamos carregar o banco:
-
-# Political Economic Risk Data from 62 Countries in 1987
-data(PErisk)
-
-# Vendo...
-PErisk
-
-# Primeiro vamos colocar a resposta em ordem...
-PErisk$prsexp2 <- factor(PErisk$prsexp2, ordered=T, levels=c("alto", 1,
-                                                             2,3,4,"baixo"))
-
-# Vamos modelar a existencia de risco de expropria????o como fun????o
-# de propinas e um judici?rio independente. Da?,
-regRI2 <- polr (prsexp2 ~ courts + barb2, data=PErisk, 
-                method="logistic", Hess=T)
-regRI2
-
-# E um sum?rio de nosso modelo:
-summary(regRI2)
 
 # The end...
