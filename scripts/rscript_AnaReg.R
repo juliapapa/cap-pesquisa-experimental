@@ -42,7 +42,7 @@ abline(modelo) # Plota a reta ajustada...
 
 # O comando 'lm' significa Linear Model e chama a função 
 # para fazer a regressão. O parametro ~ informa o console 
-# que a vari?vel 'y' será explicada pela variável 'x'. 
+# que a variável 'y' será explicada pela variável 'x'. 
 # O comando 'abline' plota a reta com o modelo no 
 # grafico de dispersão.
 
@@ -77,7 +77,7 @@ par("mfrow"=c(2,2)) # quatro gráficos na mesma tela...
 plot(modelo, 1:4) # O R faz até seis. Os quatro primeiros são mais importantes...
 par("mfrow"=c(1,1)) # volta as janelas gráficas ao normal...
 
-# O primeiro gr?áfico é o resíduo contra 
+# O primeiro gráfico é o resíduo contra 
 # os valores ajustados do modelo.
 # Ele nos dá uma idéia de quanto nosso 
 # ajuste é ou não razoável. Ou seja,
@@ -486,14 +486,12 @@ gqtest (modelo) # Tambem e homocedastico...
 # Multicolinearidade:
 vif(modelo) # Ok...
 
-# Correla????es parciais...
+# Correlações parciais...
 library(car)
 crPlots(modelo, ask=F)
 
-# Teste de especifica????o de Ramsey:
+# Teste de especificação de Ramsey:
 resettest(modelo)
-
-# Ou seja, temos um modelo bom para colocarmos em um artigo...
 
 #############################
 ## Outros Modelos Lineares ##
@@ -537,8 +535,9 @@ plot(modelo, 1)
 # Um teste formal para se o modelo foi bem especificado:
 resettest(modelo)
 
-# Ou seja, conforme esperado, o modelo n??o fora bem especificado...
-# Vamos ent??o ajustar por uma quadr?tica:
+# Ou seja, conforme esperado, o modelo 
+# não foi bem especificado...
+# Vamos então ajustar por uma quadrática:
 modelo <- lm(Val~Prod+I(Prod^2))
 summary(modelo)
 
@@ -546,7 +545,7 @@ summary(modelo)
 plot(modelo, 1)
 resettest(modelo)
 
-# Novamente o modelo n??o ? bom... Vejamos ent??o uma c?bica:
+# Novamente o modelo não é bom... Vejamos então uma cúbica:
 modelo <- lm(Val~Prod+I(Prod^2)+I(Prod^3))
 summary(modelo)
 
@@ -554,31 +553,36 @@ summary(modelo)
 plot(modelo, 1)
 resettest(modelo)
 
-# Ou seja, o modelo correto para estes dados ? o modelo c?bico.
-# Note que a teoria economica sobre o assunto j? era clara neste ponto...
+# Ou seja, o modelo correto para 
+# estes dados é o modelo cúbico.
 
 ## Modelo para dados Exponenciais:
-# Em geral, os outros modelos lineares consistem em 'linearizarmos' outras
-# rela????es entre os dados. As rela????es s??o, naturalmente, lineares nos
-# parametros e n??o nas vari?veis. Vejamos um modelo exponencial:
+# Em geral, os outros modelos lineares 
+# consistem em 'linearizarmos' outras
+# relações entre os dados. As relações 
+# são, naturalmente, lineares nos
+# parametros e não nas variáveis. 
+# Vejamos um modelo exponencial:
 
 # Population of the United States
-data(USPop) # dados para popula????o nos EUA...
+data(USPop) # dados para população nos EUA...
 
 # O que tem nesse banco?
 help("USPop")
 
 summary(USPop)
-# Ou seja, um banco normal com popula????o x ano... Vejamos ent??o um gr?fico:
+# Ou seja, um banco normal com população x ano... 
+# Vejamos então um gráfico:
 plot(USPop)
 
-# Um modelo que capta estes dados ?:
+# Um modelo que captura estes dados é:
 modelo <- lm(population~year, data=USPop)
 modelo
 summary(modelo)
 plot(modelo,1)
 
-# Qual o problema deste modelo? O fato de ele ser n??o-linear nas vari?veis...
+# Qual o problema deste modelo? O fato de ele ser não-linear 
+# nas variáveis...
 # Vejamos o modelo correto:
 modelo <- lm(I(log(population))~year, data=USPop)
 modelo
