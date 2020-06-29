@@ -457,7 +457,7 @@ rm(race, fire, theft, age, involact, income) # limpando o lixo...
 # vamos obter um sum?rio do banco de dados
 summary(chicago)
 
-pairs(chicago, gap=0) # temos algumas rela????es...
+pairs(chicago, gap=0) # temos algumas relações...
 
 # Vamos ent?o compor o modelo:
 modelo=lm(involact~.,data=chicago)
@@ -473,7 +473,10 @@ modelo_step <- step(modelo)
 modelo_step
 
 # Ou seja, deu uma melhorada...
-plot(modelo, which=1:4)
+plot(modelo, 1)
+plot(modelo, 2)
+plot(modelo, 3)
+plot(modelo, 4)
 
 # Testando a hipotese de normalidade do erro...
 shapiro.test(resid(modelo))
