@@ -1,6 +1,4 @@
 ## Preliminares
-Pinf <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/bancos_de_dados/pinf.csv')
-vinc <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/bancos_de_dados/voteincome.csv')
 data(USArrests)
 Chile <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/bancos_de_dados/Chile.csv')
 Duncan <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-experimental/master/bancos_de_dados/Duncan.csv')
@@ -11,6 +9,10 @@ sanction <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-
 ##########################
 ## Análise de Regressão ##
 ##########################
+
+require(tidyverse)
+require(lmtest)
+require(car)
 
 x = c(0,1,1,3,4,5,5,6,6,7,8,8,9,9,10,11,12)
 y = c(21,20,19,21,24,22,27,27,26,26,25,28,27,29,26,30,29)
