@@ -1,0 +1,593 @@
+---
+title: "Modulo 3"
+subtitle: "Experiments and Field Experiments"
+date: "`r Sys.Date()`"
+author: "Umberto Mignozzetti"
+institute: |
+  | School of International Relations FGV
+  | FGV
+output: beamer_presentation
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{wrapfig}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
+  - \usepackage{xcolor}
+---
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, size = "\\scriptsize")
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80),tidy=TRUE)
+require(kableExtra)
+require(tidyverse)
+require(ggpubr)
+```
+
+# Social Sciences Experiments
+
+## Cause and effect
+
+- Life: daily questions about cause and effect
+- Decisions: in part, need cause and effect thinking
+- Does eat more vegetables makes you healthier?
+- Does donate for a party gives you access to policymaking?
+- Do smaller classrooms improve education?
+- Do give monetary rewards for parents improve school attendance?
+- Can you give an example?
+
+## Cause and effect
+
+- How can we answer to those questions?
+- What methods give the right answers?
+- What methods do **not** give the right answer?
+- We will study these things in this course.
+
+## Cause and effect: example
+
+- Does police violence against protestors increase population support for their cause?
+- Maybe firing against protestors will drive them home?
+- Evidence: police suppression of black-blocks in Sao Paulo. 
+- Maybe it could galvanize their popular support?
+- Evidence: 2013 mass protests in Brazil.
+- How should the police respond?
+
+## Cause and effect: example
+
+- Medicine: aorthic arrhythmia
+- Theory: arrhythmia is a precursor to hearth attack.
+- Three drugs developed to stop arrhythmia.
+- Guess what?
+- Big clinical trial: all drugs failed. Two of them increased the chance of hearth attack.
+
+## Cause and effect: example
+
+- Medicine: aorthic arrhythmia
+- All the theory supported the claim that arrthymia caused heart attacks
+- But by correlations!
+- Correlation: many people with arrthymia have hearth attack
+- Does it make it a cause of hearth attack?
+
+## Cause and effect: example
+
+- Does take a prep-course increase your scores?
+- Many would think it is true.
+- But what about the fact that many people taking a prep-test are motivated to get best scores?
+- Mayor in the US: every time our team wins, we party.
+- Would you prescribe partying as a way for your team to win?
+
+## Cause and effect
+
+- Although this sounds ridiculous, that what we do in most of our research...
+- We usually say to people: in order to pass the exam, you have to take the prep test.
+- However, what are the *unobserved* factors affecting this prescription?
+- *Unobserved*: things that we cannot measure: motivation, willingness to work hard, family support, etc
+- Most of the research carried out claims that *we just need to control for X*
+
+## Cause and effect
+
+- I hate to be the bearer of bad news, but there are things we cannot control for!
+- How many people said to you past year: 
+  - You just need to control for $X$? 
+  - Your measures will improve if you look at $Y$ as a source of heterogeneity?
+  - Why don't you split your sample in $Z$?
+- There is, and there will always be, unobservable characteristics when doing observational research.
+
+## Cause and effect
+
+- Is there a way out of this mess?
+- What if you could be sure to say: I don't need to do that because my dataset is credibly not affected by this variable?
+\pause- Good news: **experiments**!
+
+## Experiments
+
+- Experiments: assign units to treatment or control.
+- Treatment: get the intervention.
+- Control: gets nothing.
+- But how do we decide who gets what?
+- One way: alternating.
+- Fibiger: tested treatment of Diphthria studying people day-on-day-off in a hospital.
+- Clever... but what is the problem?
+
+## Experiments
+
+- Fisher: first person who saw this problem.
+- What is the way to assign units to treatment and control in order to eliminate any systematic differences between them?
+- His answer: random assignment!
+
+## Experiments
+
+- But why random assignment?
+- Physics: does not need random assignment.
+- Atoms: more or less the same.
+- This means that they are *interchangeable*
+- But is it possible to do experiments in social sciences?
+
+## Experiments
+
+- The answer is: in most of the cases, yes!
+- Why we don't do more then?
+- Because it is very hard to mimic real-life situations.
+
+## Experiments
+
+- Example: we could show a jar for a person.
+- Say that there is a ball, either red or blue.
+- Then show up in the screen: *a credible source says that the ball has 70\% chance to be red*.
+- Finally, the person has to guess the color of the ball.
+- What is this experiment testing?
+
+## Experiments
+
+- This experiment is great, and in some sense, has the power that it isolates the key characteristics of political information.
+- However, is there any other setting that could give a *more naturalistic* approach?
+- That's what we do in **field experiments**.
+- The name came from actual agricultural experiments.
+- **Realism**: objetive of field exps. Although hard to achieve.
+
+## Experiments: realism
+
+- Degree if realism:
+  - Authenticity of the treatment
+  - Participants
+  - Contexts
+  - Outcomes
+- But what constitutes a field experiment depends on how the *field* is defined.
+
+## Field Experiments
+
+- Field experiments: challenging to implement.
+- Require:
+  - Design
+  - Planning
+  - Pilot testing
+  - Constant supervision
+- Another criticism: fail to grasp big questions.
+- But the field is increasing fast.
+
+## Naturally ocurring experiments
+
+- Quasi-experiments: experiments naturally occuring or assigned by governments or institutions.
+  - Vienam draft lottery.
+  - Random audit in Brazilian municipalities.
+  - Scheduled castes for Indian local government.
+  - Size of legislature determined by population thresholds.
+- But they do not envolve explicit random assignment.
+
+## Plan of this module
+
+- Class 1 (today): experiments and definitions
+- Class 2: random sampling
+- Class 3: working with covariates
+- Class 4: Intro to *declare design* R package
+- Class 5: Non-compliance
+
+## Plan of this class
+
+- Class 6: Non-compliance (cont'd)
+- Class 7: Attrition
+- Class 8: Heterogeneity
+- Class 9: Mediation
+- Class 10: Getting your experiment done
+
+## Plan of this class
+
+- Books:
+
+Main:
+
+> Gerber and Green. Field Experiments.
+
+Stats:
+
+> Aronow and Miller. Foundations of Agnostic Statistics.
+
+Experiments:
+
+> Morton and Williams. Experimental Political Science and the Study of Causality.
+
+## Plan of this class
+
+Basic Stats + R:
+
+> Imai. Quantitative Social Sciences.
+
+Declare Design:
+
+> [https://declaredesign.org](https://declaredesign.org)
+
+Econometrics:
+
+> Angrist and Pischke. Mostly Harmless Econometrics.
+
+## Plan of this class
+
+- The classes will be based on Gerber and Green
+- But feel free to read broad!
+- Please bring experiences from your own work!
+- And keep an open and creative mind!
+- You homerun experiment might be just a few neuronal connections away!
+
+# Causal Inference and Experimentation
+
+## Potential Outcomes
+
+- Experiments makes things easier in terms of analysis.
+- But there are some technicalities that we need to learn.
+- For instance, many problems happened in the field.
+- E.g., in my Zika experiment, the App crashed in the day that I went in the field. What to do?
+- To decide, you have to understand what can be done to solve, without violating the randomness.
+
+## Potential Outcomes
+
+- Suppose we have an experiment to access the impact health care provision
+- Suppose we have the following question: do health care interventions to decrease dengue work?
+- The context is Dengue prevention.
+- Teams have to go to households, finding and eliminating breeding sites of *a. aegypti*.
+- And we assign streets to either to teams or not.
+
+## Potential Outcomes: definitions
+
+- **Treatment**: receiving or not a team.
+- **Outcome**: dengue fever cases in each street block.
+
+## Potential Outcomes: definitions
+
+- Let a given street block $i$.
+- For each street block, we have the outcomes in terms of dengue, having the treatment assigned or not.
+- And here are the outcomes:
+
+## Potential Outcomes
+
+```{r, echo=FALSE}
+dt <- data.frame(
+  Street = c(1,2,3,4,5,6,7, 'Average'),
+  Yi_0 = c(15,15,30,15,20,15,30, 20),
+  Yi_1 = c(10,15,20,20,10,15,15, 15),
+  tau_i = c(-5,0,-10,5,-10,0,-15, -5))
+kable(dt, "latex", booktabs = T, align = "c") %>%
+  kable_styling(position = "center") %>%
+  column_spec(1, bold=T) %>%
+  column_spec(4, bold=T) %>%
+  row_spec(0, bold=T) %>%
+  row_spec(8, bold=T)
+```
+
+- $Y_i(0)$: outcome when the unit is **not** treated
+- $Y_i(1)$: outcome when the unit is treated
+- And for example, unit $i=3$ has an effect of $-10$.
+
+## Potential Outcomes
+
+```{r, echo=FALSE}
+dt <- data.frame(
+  Street = c(1,2,3,4,5,6,7, 'Average'),
+  Yi_0 = c(15,15,30,15,20,15,30, 20),
+  Yi_1 = c(10,15,20,20,10,15,15, 15),
+  tau_i = c(-5,0,-10,5,-10,0,-15, -5))
+kable(dt, "latex", booktabs = T, align = "c") %>%
+  kable_styling(position = "center") %>%
+  column_spec(1, bold=T) %>%
+  column_spec(4, bold=T) %>%
+  row_spec(0, bold=T) %>%
+  row_spec(8, bold=T)
+```
+
+- Treatment effects:
+$$ \tau_i \equiv Y_i(1) - Y_i(0) $$
+
+## Potential Outcomes
+
+```{r, echo=FALSE}
+dt <- data.frame(
+  Street = c(1,2,3,4,5,6,7, 'Average'),
+  Yi_0 = c(15,15,30,15,20,15,30, 20),
+  Yi_1 = c(10,15,20,20,10,15,15, 15),
+  tau_i = c(-5,0,-10,5,-10,0,-15, -5))
+kable(dt, "latex", booktabs = T, align = "c") %>%
+  kable_styling(position = "center") %>%
+  column_spec(1, bold=T) %>%
+  column_spec(4, bold=T) %>%
+  row_spec(0, bold=T) %>%
+  row_spec(8, bold=T)
+```
+
+- What is the problem here?
+
+## Potential Outcomes
+
+```{r, echo=FALSE}
+dt <- data.frame(
+  Street = c(1,2,3,4,5,6,7, 'Average'),
+  Yi_0 = c(15,15,30,15,20,15,30, 20),
+  Yi_1 = c(10,15,20,20,10,15,15, 15),
+  tau_i = c(-5,0,-10,5,-10,0,-15, -5))
+kable(dt, "latex", booktabs = T, align = "c") %>%
+  kable_styling(position = "center") %>%
+  column_spec(1, bold=T) %>%
+  column_spec(4, bold=T) %>%
+  row_spec(0, bold=T) %>%
+  row_spec(8, bold=T)
+```
+
+- What is the problem here?
+
+## Potential Outcomes
+
+- Suppose that we assign the treatment $d_{i}$ to the street blocks.
+- $d_{i} \in \{0,1\}$
+- Then, we will observe $Y_{i}(d_{i})$ for every unit $i$.
+- The observed outcome is equal to
+$$ Y_{i} \ = \ d_{i} Y_{i}(1) - (1-d_{i})Y_{i}(0) $$
+- It is the combination of the two possibilities.
+
+## Potential Outcomes
+
+- And the average treatment effect (ATE) is the average of all $\tau_i$.
+$$ ATE \ = \ \dfrac{1}{N}\sum_{i=1}^{N} \tau_{i} $$
+- Now suppose that we draw two street blocks randomly. How many possible selections we have?
+$$ {N \choose k} = {7 \choose 2} = 21 $$
+- We could now compute the average for any of the random draws:
+```{r, echo=FALSE}
+options(width=50)
+(dt$Yi_0[combn(7,2)[1,]]+dt$Yi_0[combn(7,2)[2,]])/2
+```
+
+## Potential Outcomes
+
+- And the average is equal to 20.
+- We will look into the average treatment effect.
+- This represents the average differences in control and treatment:
+\begin{eqnarray*} 
+E[Y_{i}(1) - Y_{i}(0)] & = & E[Y_{i}(1)] - E[Y_{i}(0)] \\
+& = & \dfrac{1}{N}\sum_{i=1}^{N} Y_{i}(1) - \dfrac{1}{N}\sum_{i=1}^{N} Y_{i}(0) \\
+& = & \dfrac{1}{N}\sum_{i=1}^{N} [Y_{i}(1) - Y_{i}(0)] \\
+& = & \dfrac{1}{N}\sum_{i=1}^{N} [\tau_{i}] \\
+& = & ATE \\
+\end{eqnarray*}
+
+## Some statistics properties
+
+Mean:
+
+- Mean of sum is sum of means:
+$$ E(X + Y) = E(X)+E(Y) $$
+- Mean times scalar, scalar goes out:
+$$ E(\alpha X) = \alpha E(X) $$
+- Mean plus scalar, scalar sums up mean:
+$$ E(\alpha X + \beta) = \alpha E(X)+\beta $$
+- Mean:
+$$ E(X) = \sum_{x \in X} x Pr[X=x] $$
+
+
+## Some statistics properties: Conditional Expectation
+
+- Conditional expectation: expected values of a variable conditioning on values of another variable.
+
+$$ E[Y | X = x] = \sum y Pr[Y=y | X = x] $$
+
+- Compute $E[\tau_{i} | Y_{i}(0) > 10]$:
+$$ E[\tau_{i} | Y_{i}(0) > 10] = \sum \tau \dfrac{Pr[\tau_{i}, \  Y_{i}(0)>10]}{Pr[Y_{i}(0)>10]} $$
+
+## Statistics and experiments
+
+- Suppose that we want to select five streets to receive the treatment and two for the control
+- ${7 \choose 5}$?
+- And we have $\dfrac{5}{7}$ chance of assign an unit to treatment.
+- How does this look like?
+
+## Statistics and experiments
+
+- Causal inference is a missing data problem!
+
+```{r, echo=FALSE}
+dt2 <- data.frame(
+  Street = c(1,2,3,4,5,6,7, 'Average'),
+  Yi_0 = c(15,'?','?','?','?','?',30, 22.5),
+  Yi_1 = c('?',15,20,20,10,15,'?', 16),
+  tau_i = c('?','?','?','?','?','?','?', -6.5))
+kable(dt2, "latex", booktabs = T, align = "c") %>%
+  kable_styling(position = "center") %>%
+  column_spec(1, bold=T) %>%
+  column_spec(4, bold=T) %>%
+  row_spec(0, bold=T) %>%
+  row_spec(8, bold=T)
+```
+
+## Statistics and experiments
+
+- The real effects, in case you could perfectly observe, is (red = treatment):
+
+```{r, echo=FALSE}
+dt3 <- data.frame(
+  Street = c(1,2,3,4,5,6,7),
+  Yi_0 = c(15,NA,NA,NA,NA,NA,30),
+  Yi_1 = c(NA,15,20,20,10,15,NA),
+  tau_i = c(NA,NA,NA,NA,NA,NA,NA))
+fig1 <- ggplot(dt[-c(8),], aes(x = Street, y = Yi_0)) + 
+  geom_point(colour="black") +
+  geom_point(aes(x=Street, y=Yi_1), colour="red") +
+  ylim(0,40) + ylab('Outcomes')
+fig1
+```
+
+## Statistics and experiments
+
+- But you observe this (red = treatment):
+
+```{r, echo=FALSE}
+dt3 <- data.frame(
+  Street = c(1,2,3,4,5,6,7),
+  Yi_0 = c(15,NA,NA,NA,NA,NA,30),
+  Yi_1 = c(NA,15,20,20,10,15,NA),
+  tau_i = c(NA,NA,NA,NA,NA,NA,NA))
+fig2 <- ggplot(dt3, aes(x = Street, y = Yi_0)) + 
+  geom_point(colour="black") +
+  geom_point(aes(x=Street, y=Yi_1), colour="red") +
+  ylim(0,40) + ylab('Outcomes')
+fig2
+```
+
+## Statistics and experiments
+
+- And side by side (red = treatment):
+
+```{r, echo=FALSE}
+ggarrange(fig1, fig2, ncol = 2, nrow = 1)
+```
+
+## Random assignment
+
+- Why the random assignment work?
+- Let $Y_{i}(1)$ an unit $i$ outcome in the treatment.
+- $Y_{i}(0)$ an unit $i$ outcome in the control.
+- $D_{i} = 1$ the assignment for treatment.
+- $D_{i} = 0$ the assignment for the control.
+
+## Random assignment
+
+- Then, as the treatment is assigned randomly, we say that is orthogonal to the outcomes and any confounder.
+
+- In math:
+
+$$ Y_{i}(0),Y_{i}(1),X \perp D_{i} $$
+
+- And as a consequence:
+
+$$ E[Y_{i}(1)|D_{i} = 1] = E[Y_{i}(1)] = E[Y_{i}(1)|D_{i} = 0] $$
+
+$$ E[Y_{i}(0)|D_{i} = 0] = E[Y_{i}(0)] = E[Y_{i}(0)|D_{i} = 0] $$
+
+- Thus:
+
+$$ ATE = E[Y_{i}(1)|D_{i} = 1] - E[Y_{i}(0)|D_{i} = 0] $$
+
+## Random assignment
+
+- **Estimators**: what we use to find (estimate) the parameter of interest.
+
+- Properties:
+
+![Efficiency and unbiasedness.](../imgs/effunb.png)
+
+- How to estimate the ATE in an unbiased way?
+
+- If $\hat{\theta}$ is an estimator of $\theta$, then unbiasedness mean $E[\hat{\theta}] = \theta$.
+
+## Random assignment
+
+- Suppose we assign the treatment to $m$ streets and the control to $N-m$ streets. Then:
+
+\begin{eqnarray*}
+E\left(\dfrac{\sum_{1}^{m}Y_{i}}{m} - \dfrac{\sum_{i=m+1}^{N-m}Y_{i}}{N-m}\right) & = & E\left(\dfrac{\sum_{1}^{m} Y_{i}}{m}\right) - E\left(\dfrac{\sum_{i=m+1}^{N-m}Y_{i}}{N-m}\right) \\
+& = & E[Y_{i}(1) | D_{i} = 1] - E[Y_{i}(0) | D_{i} = 0] \\
+& = & E[Y_{i}(1) - Y_{i}(0)] = E[ \tau_{i} ] = ATE
+\end{eqnarray*}
+
+- This estimator is unbiased! It is called the *differences-in-means* estimator.
+
+## Random assignment
+
+- But this still does not define what a random assignment is.
+- What is random assignment?
+- **Definition**: An assignment that is statistically independent to all *observed* and *unobserved* variables.
+- **Complete random assignment**: first design we will use.
+  - When we randomly design $m$ units for the treatment and $N-m$ units for the control.
+  - Like throw a fair coin to assign cases to treatment and control.
+- We will use a tool called *DeclareDesign*. It is probably the best there is on experimental implementation, analysis and diagnostics.
+
+## Random assignment
+
+- What happens when we don't use random assignment?
+- Selection bias:
+
+$$
+E[Y_{i}(1)|D_{i} = 1] - E[Y_{i}(0)|D_{i} = 0] = 
+$$
+
+$$
+E[Y_{i}(1) - Y_{i}(0) | D_{i} = 1] + E[Y_{i}(0) | D_{i} = 1] - E[Y_{i}(0) | D_{i} = 1]
+$$
+
+- Note that $E[Y_{i}(0) | D_{i} = 1] - E[Y_{i}(0) | D_{i} = 0]$ should be zero when the assignment is random!
+- Real-life example: Instead of random assignment, we left households to decide whether they will receive a given team or another.
+- And the households with more Dengue get better teams.
+
+## Random assignment: core assumptions
+
+- Potential outcomes:
+  - Each street have a dengue level when treated and not treated
+  - The potential outcomes, to work, require that each potential outcome depend *solely* on whether they *itself* received the treatment.
+  - *solely*: excludability assumption
+  - *itself*: non-interference
+
+## Random assignment: excludability
+
+- Potential outcomes:
+  - Only two, and the only relevant causal agent is the treatment assignment.
+  - We must distinguish between *treatment* ($d_{i}$) and other variables that relate with the treatment ($z_{i}$).
+  - Example: $Y_{i}(z,d)$::
+    - $Y_{i}(z=1,d=1)$: get the drug and take the drug
+    - $Y_{i}(z=1,d=0)$: get the drug but throw it in the garbage
+    - $Y_{i}(z=0,d=1)$: wasn't supposed to get the drug, but found it in the garbage and took it
+    - $Y_{i}(z=0,d=0)$: didn't get the drug and didn't take it
+
+**Excludability:** $$Y_{i}(z=1,d) = Y_{i}(z=0,d)$$
+
+## Threats to excludability?
+
+- Don't take the drug.
+- Don't have good measurements in a street compared to another.
+- Fail to deliver the treatment (partial implementation)
+- Some people refusing or claiming the treatment.
+- Medical studies: double blind because of such problems...
+
+## Random assignment: non-interference
+
+- SUTVA: Stable Unit Treatment Value Assumption
+- $Y_{i}(d)$: written as the value of the unit only depends on the treatment itself.
+- So, regardless of what was the treatment status of other units, the treatment effect depends only on the assignment to the given unit.
+- For example: what if the unit get treated because we treated all neighbor street? Interference!
+- If streets are far away from each other, then ok!
+- We will study spillover in the next chapters.
+
+# Summary
+
+## Summary
+
+- **Random assignment**: treatment allocated such that all units have a known probability.
+  - Treatment assignment unpredictable
+
+- **Excludability**: Potential outcomes depend only in the treatment.
+
+- **Non-interference**: Reflect only treatment and control for the unit, and not for others.
+
+- Next class: doing random assignments!

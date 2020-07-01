@@ -14,12 +14,18 @@ sanction <- read.csv('https://raw.githubusercontent.com/umbertomig/cap-pesquisa-
 # Vamos agora para o que interessa: Nossa primeira hip?tese:
 
 # Grafico:
+Pinf$y <- factor(Pinf$y, 
+                 levels = c("Very Low",
+                            "Fairly Low", 
+                            "Average", 
+                            "Fairly High", 
+                            "Very High"))
 mosaicplot(y~collegeDegree, data=Pinf)
 
 # exercício: organize os níveis de y
 
-# Suposi????o: existe uma rela????o entre escolaridade e informa????o pol?tica.
-# Hip?tese: quanto maior a escolaridade mais interesse por pol?tica.
+# Suposição: existe uma relação entre escolaridade e informação política.
+# Hipótese: quanto maior a escolaridade mais interesse por política.
 attach(Pinf)
 
 # Para testa-la, vamos escreve-la como uma tabela:
@@ -27,13 +33,13 @@ thip1 <- table(collegeDegree,y)
 thip1
 
 # Em propor????o teriamos:
-prop.table(thip1,1) # Pelo total-linha logicamente...
+prop.table(thip1,2) # Pelo total-linha logicamente...
 
 # Ou seja, cresce a propor????o de interessados por pol?tica quando aumentamos a
 # escolaridade. Dai:
 
 # Logica do teste:
-# Hipotese nula: Nao ha rela????o entre escolaridade e interesse por pol?tica;
+# Hipotese nula: Nao ha relação entre escolaridade e interesse por pol?tica;
 # Hip?tese alternativa: h? rela????o;
 # Teste para o caso: Duas categ?ricas: teste de Qui-Quadrado:
 chisq.test(thip1)
@@ -80,8 +86,8 @@ plot(TukeyHSD(minha_anova))
 # homog?nea. Chamamos isso de homocedasticidade. Para testar se isso ?
 # verdadeiro:
 
-# H_zero: ? igual (homocedasticidade)
-# H_a: ? diferente (heterocedasticidade)
+# H_zero: é igual (homocedasticidade)
+# H_a: é diferente (heterocedasticidade)
 
 bartlett.test(age~y, data=Pinf)
 
@@ -100,8 +106,13 @@ mosaicplot(education~vote, data=vinc)
 tabela <- xtabs(~vote+education, data=vinc)
 tabela
 
+chisq.test(tabela)
+
 # E o mosaico:
 mosaicplot(female~vote, data=vinc)
+
+tabela <- xtabs(~vote+female, data=vinc)
+chisq.test(tabela)
 
 # Suposi????o: Existe uma rela????o entre voto, sexo e educa????o.
 # Pela analise do grafico, sexo n?o ? um bom controle.
@@ -115,6 +126,11 @@ mosaicplot(female~vote, data=vinc)
 # Resposta:
 chisq.test(tabela) # Hipotese nula nao serviu...
 
+# exercício
+tab <- table(Chile$education, Chile$vote)
+mosaicplot(tab)
+chisq.test(tab)
+
 ## Vejamos outro teste de hip?tese...
 # Como sempre come?amos pela an?lise gr?fica
 plot(Murder~Assault, data=USArrests)
@@ -126,7 +142,7 @@ plot(Murder~UrbanPop, data=USArrests)
 # Hip?tese: quando eu aumento uma delas as outras aumentam.
 
 # A correla????o entre elas ?:
-cor (USArrests)
+cor(USArrests)
 
 # Pergunta: como afirmar que estas correla????es s?o validas?
 # Com infer?ncia!

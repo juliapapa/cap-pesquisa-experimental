@@ -37,7 +37,7 @@ summary(modelo) # Faz os testes preliminares.
 
 # façamos os gráficos para ficar mais intuitivo:
 
-plot(y~x)
+plot(y~x,col = 10,pch=16)
 abline(modelo) # Plota a reta ajustada...
 
 # O comando 'lm' significa Linear Model e chama a função 
@@ -53,8 +53,7 @@ abline(modelo) # Plota a reta ajustada...
 boxplot(resid(modelo)) # ? mais-ou-menos simétrico... isso é bom...
 hist(resid(modelo)) ## ? quase uma normal...
 
-qqnorm(resid(modelo))
-qqline(resid(modelo))
+qqnorm(resid(modelo)); qqline(resid(modelo))
 # Este é o grafico QQ-Norm. Ele, juntamente com o comando 
 # qqline, são usados
 # para observarmos se o formato da distribuição 
@@ -151,6 +150,13 @@ plot(modelo, 4)
 # de consciência, um gráfico dos dados:
 plot(Assault~UrbanPop, data=USArrests)
 abline(modelo)
+
+## Muder ~ Assault
+mod <- lm(Murder~Assault, data = USArrests)
+summary(mod)
+
+plot(Murder~Assault, data = USArrests)
+abline(mod)
 
 # Digamos que quisessemos saber quais 
 # os valores encontrados no ajuste,
@@ -265,7 +271,8 @@ summary(Chile)
 # em fun????o da popula????o, da renda, da idade, e da escolaridade.
 # Assim, o modelo fica: statusquo~income+population+age+education...
 # Aplicando a formula:
-modelo <- lm(statusquo~income+population+age+education, data=Chile)
+modelo <- lm(statusquo~income+population+age+education, 
+             data=Chile)
 
 # Como o banco n?o est? atachado, devemos mandar o R procurar as vari?veis
 # no banco Chile, da? o par?metro 'data=Chile'. Vejamos nosso modelo:
@@ -380,13 +387,16 @@ modelo
 summary(modelo)
 
 # E observando os erros...
-plot(modelo, which=1:4)
+plot(modelo, 1)
+plot(modelo, 2)
+plot(modelo, 3)
+plot(modelo, 4)
 
 # Para observarmos como cada vari?vel se comporta com rela????o
 # Ao modelo, usamos o que chamamos de Partial Plots,
 # que plota os res?duos contra a vari?vel para testarmos
 # o que chamamos tecnicamente de correla????o parcial. Da?,
-cr.plots(modelo, ask=F) # Ask =F ? importante!
+crPlots(modelo, ask=F) # Ask =F ? importante!
 
 # Ou seja, ele produz um gr?fico para a correla????o parcial
 # de acordo com cada preditor. Isso nos ajuda a ver a influ?ncia
