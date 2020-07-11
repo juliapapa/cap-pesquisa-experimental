@@ -611,7 +611,7 @@ ggarrange(fig1, fig2, ncol = 2, nrow = 1)
 - Teoria: mulheres investem mais em saneamento que homens. Homens tendem a investir mais em estradas.
 - Digamos que seja verdade...
 
-## Distribuição populaciona
+## Distribuição populacional
 
 ```{r}
 dt <- data.frame(Vila = as.character(1:10),
