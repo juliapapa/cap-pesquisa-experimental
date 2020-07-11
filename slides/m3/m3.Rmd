@@ -242,8 +242,6 @@ Econometrics:
 
 - Experiments makes things easier in terms of analysis.
 - But there are some technicalities that we need to learn.
-- For instance, many problems happened in the field.
-- E.g., in my Zika experiment, the App crashed in the day that I went in the field. What to do?
 - To decide, you have to understand what can be done to solve, without violating the randomness.
 
 ## Potential Outcomes
@@ -374,36 +372,6 @@ E[Y_{i}(1) - Y_{i}(0)] & = & E[Y_{i}(1)] - E[Y_{i}(0)] \\
 & = & ATE \\
 \end{eqnarray*}
 
-## Some statistics properties
-
-Mean:
-
-- Mean of sum is sum of means:
-$$ E(X + Y) = E(X)+E(Y) $$
-- Mean times scalar, scalar goes out:
-$$ E(\alpha X) = \alpha E(X) $$
-- Mean plus scalar, scalar sums up mean:
-$$ E(\alpha X + \beta) = \alpha E(X)+\beta $$
-- Mean:
-$$ E(X) = \sum_{x \in X} x Pr[X=x] $$
-
-
-## Some statistics properties: Conditional Expectation
-
-- Conditional expectation: expected values of a variable conditioning on values of another variable.
-
-$$ E[Y | X = x] = \sum y Pr[Y=y | X = x] $$
-
-- Compute $E[\tau_{i} | Y_{i}(0) > 10]$:
-$$ E[\tau_{i} | Y_{i}(0) > 10] = \sum \tau \dfrac{Pr[\tau_{i}, \  Y_{i}(0)>10]}{Pr[Y_{i}(0)>10]} $$
-
-## Statistics and experiments
-
-- Suppose that we want to select five streets to receive the treatment and two for the control
-- ${7 \choose 5}$?
-- And we have $\dfrac{5}{7}$ chance of assign an unit to treatment.
-- How does this look like?
-
 ## Statistics and experiments
 
 - Causal inference is a missing data problem!
@@ -484,7 +452,7 @@ $$ Y_{i}(0),Y_{i}(1),X \perp D_{i} $$
 
 $$ E[Y_{i}(1)|D_{i} = 1] = E[Y_{i}(1)] = E[Y_{i}(1)|D_{i} = 0] $$
 
-$$ E[Y_{i}(0)|D_{i} = 0] = E[Y_{i}(0)] = E[Y_{i}(0)|D_{i} = 0] $$
+$$ E[Y_{i}(0)|D_{i} = 1] = E[Y_{i}(0)] = E[Y_{i}(0)|D_{i} = 0] $$
 
 - Thus:
 
@@ -534,7 +502,7 @@ E[Y_{i}(1)|D_{i} = 1] - E[Y_{i}(0)|D_{i} = 0] =
 $$
 
 $$
-E[Y_{i}(1) - Y_{i}(0) | D_{i} = 1] + E[Y_{i}(0) | D_{i} = 1] - E[Y_{i}(0) | D_{i} = 1]
+E[Y_{i}(1) - Y_{i}(0) | D_{i} = 1] + E[Y_{i}(0) | D_{i} = 1] - E[Y_{i}(0) | D_{i} = 0]
 $$
 
 - Note that $E[Y_{i}(0) | D_{i} = 1] - E[Y_{i}(0) | D_{i} = 0]$ should be zero when the assignment is random!
@@ -590,4 +558,256 @@ $$
 
 - **Non-interference**: Reflect only treatment and control for the unit, and not for others.
 
-- Next class: doing random assignments!
+# Desenho experimental
+
+## Experimentos
+
+- Aleatorização
+- Não-interferência
+- Excludability
+
+## Aleatorização
+
+- Aleatorização é complexa.
+- Computadores: produzem numeros pseudo-aleatórios.
+- Aleatório: não existe padrão observável no sorteio.
+- Pseudo-aleatório: existe algum padrão, mesmo que difícil de encontrar, no sorteio.
+
+## Aleatorização
+
+- Qual dos dois você acha mais aleatório?
+```{r, echo=FALSE, include=FALSE}
+dt <- data.frame(x = sample(seq(0, 1, 0.01), size = 100, replace = T),
+                  y = sample(seq(0, 1, 0.01), size = 100, replace = T))
+dt2 <- data.frame(x = rep(seq(0, 1, 0.1),10))
+y = numeric()
+for (i in 1:10) {
+  y = c(y,rep((i-1)/10, 11))
+}
+dt2$y <- y
+
+fig1 <- ggplot(dt, aes(x = x, y = y)) + 
+  geom_point(colour="black") + ylim(0,0.9) + xlim(0,0.9)
+fig2 <- ggplot(dt2, aes(x = x, y = y)) + 
+  geom_point(colour="black") + ylim(0,0.9) + xlim(0,0.9)
+```
+
+```{r, echo=FALSE}
+ggarrange(fig1, fig2, ncol = 2, nrow = 1)
+```
+
+
+## Estimação e distribuição amostral
+
+- Estatística: quantificação da incerteza.
+- Queremos saber se e o quanto podemos confiar no resultado do experimento.
+- Distribuição populacional: como os valores aparecem na população.
+- Um exemplo de experimento *cozinhado* aqui.
+
+## Distribuição populacional
+
+- População: 10 vilarejos
+- Tratamento: Efeito de ter mulher como representante do vilarejo sobre o gasto com saneamento.
+- Teoria: mulheres investem mais em saneamento que homens. Homens tendem a investir mais em estradas.
+- Digamos que seja verdade...
+
+## Distribuição populaciona
+
+```{r}
+dt <- data.frame(Vila = as.character(1:10),
+  Yi0 = round(rnorm(10), 1), Yi1 = 0.5+round(rnorm(10), 1))
+```
+```{r, echo=FALSE}
+ggplot(dt, aes(x = Vila, y = Yi0)) + 
+  geom_point(colour="black") + 
+  geom_point(aes(x=Vila, y=Yi1), colour="red") + 
+  ylim(-4,4) + ylab('Potential Outcomes (red = tr)')
+```
+
+## Distribuição populacional
+
+- Em tabela:
+
+```{r, echo=FALSE}
+kable(data.frame(dt, tau = dt$Yi1-dt$Yi0), 
+      "latex", booktabs = T, align = "c") %>%
+  kable_styling(position = "center")
+```
+
+## Distribuição amostral
+
+- Para tratamentos com tamanho $5$, temos `r choose(10,5)` opções.
+- Para cada uma das opções, temos os seguintes efeitos de tratamento:
+- Um exemplo das combinações que podemos ter:
+```{r}
+combn(10,5)
+```
+
+## Calculando ATE
+
+$$ ATE \ = \ \dfrac{1}{N}\sum_{i=1}^{N} \tau_{i} $$
+
+## ATE com missing data...
+
+- No primeiro assignment, teremos: `r combn(10,5)[,1]`. Assim, observamos:
+
+```{r, echo=FALSE}
+dt2 <- dt
+dt2$Yi0[11-combn(10,5)[,1]] = NA
+dt2$Yi1[combn(10,5)[,1]] = NA
+kable(dt2, "latex", booktabs = T, align = "c") %>% kable_styling(position = "center")
+```
+
+- Com $E(Y_i(0)) =$ `r mean(dt2$Yi0, na.rm=T)` e $E(Y_i(1)) =$ `r mean(dt2$Yi1, na.rm=T)`.
+
+## Incerteza
+
+- Mas temos `r choose(10,5)` possíveis combinações. Como elas se comportam?
+
+- Podemos calcular a média para todas as combinações...
+
+```
+meanYi0 <- numeric()
+meanYi1 <- numeric()
+cbn <- combn(10,5)
+for (i in 1:choose(10,5)) {
+  meanYi0[i] <- mean(dt$Yi0[cbn[,i]])
+  meanYi1[i] <- mean(dt$Yi1[11-cbn[,i]])
+}
+hist(meanYi1-meanYi0)
+```
+
+## Incerteza
+
+- E teremos:
+
+```{r, echo=FALSE}
+meanYi0 <- numeric()
+meanYi1 <- numeric()
+cbn <- combn(10,5)
+for (i in 1:choose(10,5)) {
+  meanYi0[i] <- mean(dt$Yi0[cbn[,i]])
+  meanYi1[i] <- mean(dt$Yi1[11-cbn[,i]])
+}
+hist(meanYi1-meanYi0)
+```
+
+## Incerteza
+
+- O valor real é 0.5. A média dos SATEs é `r mean(meanYi1-meanYi0)`! Bem próximo.
+
+```{r, echo=FALSE}
+meanYi0 <- numeric()
+meanYi1 <- numeric()
+cbn <- combn(10,5)
+for (i in 1:choose(10,5)) {
+  meanYi0[i] <- mean(dt$Yi0[cbn[,i]])
+  meanYi1[i] <- mean(dt$Yi1[11-cbn[,i]])
+}
+hist(meanYi1-meanYi0)
+```
+
+## Incerteza
+
+- Mas note algumas coisas interessantes:
+  - Os valores tem variância grande!
+  - Alguns valores dá tratamento maior que 1: concluiríamos que o tratamento é super efetivo
+  - Alguns dão tratamento menor que 0... tratamento diminui a chance de investimentos em estradas...
+  - Temos de quantificar essa incerteza!
+  
+## Erro padrão
+
+- Erro padrão é a medida do quanto de incerteza temos.
+
+- Desvio-padrão: medida de disperção dos dados:
+$$ DP(X) = \sqrt{\dfrac{1}{N-1}(X_i - \overline{X})^2} $$
+
+- Erro-padrão: medida de disperção do estimador:
+$$ EP(\widehat{ATE}) = \sqrt{\dfrac{1}{N-1}(ATE_i - \overline{ATE})^2} $$
+
+## Erro padrão
+
+- Erro-padrão: formula alternativa:
+$$ \sqrt{ \dfrac{1}{N-1} \left( \dfrac{mVar(Y_i(0))}{N-m} + \dfrac{(N-m)Var(Y_i(1))}{m} + 2Cov(Y_i(0), Y_i(1)) \right) } $$
+
+- O que sabemos?
+  1. Aumentando o N diminui o EP: aumentar a amostra!
+  2. Diminuindo as variâncias diminui o EP: medir direito!
+  3. Se variâncias similares, metade-metade é a melhor estratégia
+  
+## Testes de hipóteses
+
+- **Sharp null**: Não há diferenças entre tratamento em controle para todas as observações.
+
+- **Null ATE**: Médias são iguais no tratamento e no controle
+
+- Convencionalmente adotamos o p-valor. 
+
+- P-valor é a chance, dado que assumimos que as médias são iguais, qual a chance de detectarmos as diferenças que observamos?
+
+- Convencionamos usar 0.05, mas isso só por conveniencia... Não tem nenhuma razão muito profunda.
+
+## Intervalos de confiança
+
+- É um modo de ao invés de usarmos um ponto, usarmos um intervalo probabilístico.
+
+- Definimos um nível de confiança: ex. 95\%
+
+- Calculamos a partir desse nível de confiança...
+
+- Se o nível de confiança for 95\%, vamos usar mais ou menos dois erros-padrão ao redor da média.
+
+- Sammi e Aronow, 2011: Se tivermos amostras pequenas, devemos corrigir usando o fator:
+
+$$ \sqrt{\dfrac{N-1}{N-2}} $$
+
+## Ganhando eficiência: aleatorização por blocos
+
+- Suponha agora que nossos 5 casos estejam em dois blocos diferentes.
+
+- Uma maneira de aleatorizar é usar a informação que temos dos blocos.
+
+- O que podem ser blocos?
+  1. Sexo
+  2. Test scores
+  3. Idade
+  4. Outras variáveis que temos conhecimento...
+  
+## Block randomization
+
+- Se temos dois blocos, podemos aleatorizar o tratamento dentro dos blocos.
+
+- Suponha blocos de tamanho 4 e 6 nos nossos casos.
+
+- Com aleatorização simples temos:
+
+$$ {10 \choose 5} $$
+
+Que é igual a `r choose(10,5)`.
+
+- Aleatorizando por blocos temos
+
+$$ {6 \choose 3}{4 \choose 2} $$
+Que é igual a `r choose(6,3)*choose(4,2)`.
+
+## Block randomization
+
+- E nosso ATE muda um pouco:
+
+$$ ATE = \sum_{j=1}^{J} \dfrac{N_j}{N}ATE_j $$
+
+Que é a média ponderada em cada um dos blocos.
+
+- E o Erro Padrão do ATE muda também!
+
+$$ EP(\widehat{ATE}) = \sqrt{\sum_1^J (\dfrac{N_j}{N})^2 EP^2(ATE_j)} $$
+
+## Próxima aula
+
+- Matched pair design
+
+- Cluster randomization
+
+- Non-compliance
+
+- Attrition
